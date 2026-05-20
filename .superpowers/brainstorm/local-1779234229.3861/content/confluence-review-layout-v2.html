@@ -1,0 +1,203 @@
+<h2>Confluence AI Readability Review</h2>
+<p class="subtitle">상단에는 문서 전체 평가 결과를, 본문 영역에는 원문 preview와 문구별 수정 제안을 배치한 결과 화면 시안입니다.</p>
+
+<div class="mockup">
+  <div class="mockup-header">평가 결과 화면 - 전체 요약 + 점수표 + 문서별 수정 제안</div>
+  <div class="mockup-body">
+    <div style="display:flex;flex-direction:column;gap:18px;">
+      <div style="border:1px solid #ccd5e3;border-radius:8px;background:#f8fafc;padding:18px;">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+          <button style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;white-space:nowrap;">새 평가 시작하기</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;">
+          <div style="background:#fff;border:1px solid #dce3ee;border-radius:8px;padding:16px;min-height:100%;display:flex;flex-direction:column;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+              <div>
+                <h3 style="margin:0 0 4px;font-size:17px;">문서 전체 평가 요약</h3>
+                <div style="font-size:12px;color:#667085;">API 장애 대응 절차 · v2.1 AI 운영 문서 기준 · 2026-05-20 22:58</div>
+              </div>
+              <span style="font-size:12px;color:#37506f;background:#e6eef8;border-radius:999px;padding:4px 9px;white-space:nowrap;">AI readable: 보완 필요</span>
+            </div>
+            <p style="font-size:14px;line-height:1.6;color:#344054;margin:0 0 12px;">
+              이 문서는 기본 구조는 유지되어 있으나, 실행 조건과 판단 기준이 모호한 표현으로 작성되어 AI가 절차를 안정적으로 재사용하기 어렵습니다.
+              특히 조치 기준, 공유 조건, 복구 우선순위를 구체화하면 문서의 자동 해석 가능성이 높아집니다.
+            </p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto;">
+              <div style="min-width:82px;text-align:center;background:#172033;color:#fff;border-radius:8px;padding:10px;">
+                <strong style="display:block;font-size:26px;line-height:1;">72</strong>
+                <span style="font-size:12px;color:#d8dee8;">점수</span>
+              </div>
+              <div style="min-width:82px;text-align:center;background:#fff7d6;border:1px solid #e8cf67;color:#594600;border-radius:8px;padding:10px;">
+                <strong style="display:block;font-size:26px;line-height:1;">B</strong>
+                <span style="font-size:12px;">등급</span>
+              </div>
+              <div style="font-size:13px;color:#667085;line-height:1.45;">
+                수정 제안 3개<br>
+                주요 리스크: 모호한 동사, 생략된 조건, 복구 기준 부재
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #dce3ee;border-radius:8px;padding:16px;min-height:100%;display:flex;flex-direction:column;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <h3 style="margin:0;font-size:17px;">평가 항목별 점수표</h3>
+              </div>
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                  <th style="text-align:left;border-bottom:1px solid #e3e8f0;padding:7px;color:#667085;">평가 항목</th>
+                  <th style="text-align:right;border-bottom:1px solid #e3e8f0;padding:7px;color:#667085;">점수</th>
+                  <th style="text-align:center;border-bottom:1px solid #e3e8f0;padding:7px;color:#667085;">등급</th>
+                </tr>
+                <tr><td style="padding:8px 7px;border-bottom:1px solid #f0f2f6;">구조 명확성</td><td style="padding:8px 7px;text-align:right;border-bottom:1px solid #f0f2f6;">84</td><td style="padding:8px 7px;text-align:center;border-bottom:1px solid #f0f2f6;">A</td></tr>
+                <tr><td style="padding:8px 7px;border-bottom:1px solid #f0f2f6;">맥락 충분성</td><td style="padding:8px 7px;text-align:right;border-bottom:1px solid #f0f2f6;">68</td><td style="padding:8px 7px;text-align:center;border-bottom:1px solid #f0f2f6;">C</td></tr>
+                <tr><td style="padding:8px 7px;border-bottom:1px solid #f0f2f6;">절차 재현성</td><td style="padding:8px 7px;text-align:right;border-bottom:1px solid #f0f2f6;">71</td><td style="padding:8px 7px;text-align:center;border-bottom:1px solid #f0f2f6;">B</td></tr>
+                <tr><td style="padding:8px 7px;border-bottom:1px solid #f0f2f6;">용어 일관성</td><td style="padding:8px 7px;text-align:right;border-bottom:1px solid #f0f2f6;">76</td><td style="padding:8px 7px;text-align:center;border-bottom:1px solid #f0f2f6;">B</td></tr>
+                <tr><td style="padding:8px 7px;">AI 활용 적합성</td><td style="padding:8px 7px;text-align:right;">63</td><td style="padding:8px 7px;text-align:center;">C</td></tr>
+              </table>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start;">
+        <div style="border:1px solid #d8dee8;border-radius:8px;background:#fff;min-height:560px;padding:24px 30px;font-family:Arial,sans-serif;color:#172033;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <div style="font-size:13px;color:#687386;">Confluence page preview</div>
+            <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:8px 10px;font-size:12px;font-weight:700;">본문 Copy</button>
+          </div>
+          <h1 style="font-size:28px;line-height:1.25;margin:0 0 18px;">API 장애 대응 절차</h1>
+          <p style="font-size:15px;line-height:1.7;margin:0 0 16px;">
+            이 문서는 운영 중 발생할 수 있는 API 장애에 대해 담당자가
+            <mark id="target-v2-1" data-original="적절히 확인하고 조치한다" data-recommendation="알림 ID, 오류율, 영향 API를 확인한 뒤 심각도 기준에 따라 조치한다" style="background:#fff19a;padding:2px 4px;border-radius:3px;">적절히 확인하고 조치한다</mark>
+            는 내용을 설명합니다.
+          </p>
+          <h2 style="font-size:21px;margin:26px 0 12px;">1. 장애 확인</h2>
+          <p style="font-size:15px;line-height:1.7;margin:0 0 12px;">
+            알림을 수신하면 모니터링 대시보드에서 상태를 확인합니다.
+            <mark id="target-v2-2" data-original="문제가 있으면 관련 팀에 공유합니다." data-recommendation="5분 이상 오류율이 3%를 넘으면 #incident-api 채널에 공유합니다." style="background:#fff19a;padding:2px 4px;border-radius:3px;">문제가 있으면 관련 팀에 공유합니다.</mark>
+          </p>
+          <ul style="font-size:15px;line-height:1.7;margin:0 0 18px 22px;">
+            <li>Grafana 대시보드 확인</li>
+            <li>최근 배포 이력 확인</li>
+            <li>영향 범위 확인</li>
+          </ul>
+          <h2 style="font-size:21px;margin:26px 0 12px;">2. 복구 진행</h2>
+          <p style="font-size:15px;line-height:1.7;margin:0 0 12px;">
+            장애 원인이 최근 배포와 관련되어 있으면 롤백을 검토합니다.
+            <mark id="target-v2-3" data-original="필요 시 적당한 방법으로 복구한다." data-recommendation="최근 배포가 원인이면 롤백을 1순위로 수행합니다." style="background:#fff19a;padding:2px 4px;border-radius:3px;">필요 시 적당한 방법으로 복구한다.</mark>
+          </p>
+        </div>
+
+        <div style="position:sticky;top:16px;border:1px solid #ccd5e3;border-radius:8px;background:#f8fafc;min-height:560px;padding:16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h3 style="margin:0;font-size:17px;">문구별 수정 제안</h3>
+            <span style="font-size:12px;color:#506079;background:#e9eef7;border-radius:999px;padding:4px 9px;">3개</span>
+          </div>
+          <div class="options" style="display:flex;flex-direction:column;gap:10px;">
+            <div class="option" data-choice="target-v2-1" onclick="toggleSelect(this); document.getElementById('target-v2-1').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+              <div class="content">
+                <h3 style="font-size:14px;margin-bottom:6px;">적절히 확인하고 조치한다</h3>
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <div style="border-left:3px solid #5b6ee1;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#3444a0;background:#eef1ff;border-radius:4px;padding:2px 6px;margin-bottom:3px;">평가 내용</span>
+                    <p style="color:#344054;line-height:1.45;">확인 대상과 조치 기준이 모호합니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #d08b13;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#8a5a00;background:#fff4d8;border-radius:4px;padding:2px 6px;margin-bottom:3px;">분석결과</span>
+                    <p style="color:#344054;line-height:1.45;">AI가 입력값과 완료 조건을 구분하기 어렵습니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #27845f;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#146146;background:#e8f6ef;border-radius:4px;padding:2px 6px;margin-bottom:3px;">AI추천</span>
+                    <p style="color:#344054;line-height:1.45;">알림 ID, 오류율, 영향 API를 확인한 뒤 심각도 기준에 따라 조치한다.</p>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:2px;">
+                    <button onclick="event.stopPropagation(); applySuggestion('target-v2-1');" style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">반영하기</button>
+                    <button onclick="event.stopPropagation(); revertSuggestion('target-v2-1');" style="border:1px solid #c8d1df;background:#fff;color:#344054;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">원복하기</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="option" data-choice="target-v2-2" onclick="toggleSelect(this); document.getElementById('target-v2-2').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+              <div class="content">
+                <h3 style="font-size:14px;margin-bottom:6px;">문제가 있으면 관련 팀에 공유합니다.</h3>
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <div style="border-left:3px solid #5b6ee1;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#3444a0;background:#eef1ff;border-radius:4px;padding:2px 6px;margin-bottom:3px;">평가 내용</span>
+                    <p style="color:#344054;line-height:1.45;">공유 조건과 대상 채널이 빠져 있습니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #d08b13;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#8a5a00;background:#fff4d8;border-radius:4px;padding:2px 6px;margin-bottom:3px;">분석결과</span>
+                    <p style="color:#344054;line-height:1.45;">실행 주체가 다음 행동을 일관되게 판단하기 어렵습니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #27845f;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#146146;background:#e8f6ef;border-radius:4px;padding:2px 6px;margin-bottom:3px;">AI추천</span>
+                    <p style="color:#344054;line-height:1.45;">5분 이상 오류율이 3%를 넘으면 #incident-api 채널에 공유합니다.</p>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:2px;">
+                    <button onclick="event.stopPropagation(); applySuggestion('target-v2-2');" style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">반영하기</button>
+                    <button onclick="event.stopPropagation(); revertSuggestion('target-v2-2');" style="border:1px solid #c8d1df;background:#fff;color:#344054;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">원복하기</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="option" data-choice="target-v2-3" onclick="toggleSelect(this); document.getElementById('target-v2-3').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+              <div class="content">
+                <h3 style="font-size:14px;margin-bottom:6px;">필요 시 적당한 방법으로 복구한다.</h3>
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <div style="border-left:3px solid #5b6ee1;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#3444a0;background:#eef1ff;border-radius:4px;padding:2px 6px;margin-bottom:3px;">평가 내용</span>
+                    <p style="color:#344054;line-height:1.45;">복구 방법의 우선순위가 필요합니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #d08b13;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#8a5a00;background:#fff4d8;border-radius:4px;padding:2px 6px;margin-bottom:3px;">분석결과</span>
+                    <p style="color:#344054;line-height:1.45;">"필요 시", "적당한" 같은 표현은 자동화 판단에 약합니다.</p>
+                  </div>
+                  <div style="border-left:3px solid #27845f;padding-left:9px;">
+                    <span style="display:inline-block;font-size:11px;font-weight:700;color:#146146;background:#e8f6ef;border-radius:4px;padding:2px 6px;margin-bottom:3px;">AI추천</span>
+                    <p style="color:#344054;line-height:1.45;">최근 배포가 원인이면 롤백을 1순위로 수행합니다.</p>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:2px;">
+                    <button onclick="event.stopPropagation(); applySuggestion('target-v2-3');" style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">반영하기</button>
+                    <button onclick="event.stopPropagation(); revertSuggestion('target-v2-3');" style="border:1px solid #c8d1df;background:#fff;color:#344054;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;">원복하기</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #f2dfb0;background:#fff7e6;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:18px;">
+        <div>
+          <h3 style="font-size:17px;margin:0 0 6px;color:#6d5100;">평가 결과 확정 전 안내</h3>
+          <p style="font-size:14px;line-height:1.6;color:#6d5100;margin:0;">
+            수정 된 페이지는 컨플런스에 직접 반영이 불가하여 본문을 Copy하여 직접 반영이 필요 합니다.
+            확정 후에는 현재 반영/원복 상태가 저장되고 포인트가 적립됩니다.
+          </p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;white-space:nowrap;">
+          <button style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:700;min-width:108px;">확정</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function applySuggestion(targetId) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    target.textContent = target.dataset.recommendation;
+    target.style.background = '#cfe3ff';
+    target.style.boxShadow = '0 0 0 1px #4c8dff inset';
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function revertSuggestion(targetId) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    target.textContent = target.dataset.original;
+    target.style.background = '#fff19a';
+    target.style.boxShadow = 'none';
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>

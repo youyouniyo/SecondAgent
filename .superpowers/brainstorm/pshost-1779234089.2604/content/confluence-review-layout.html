@@ -1,0 +1,88 @@
+<h2>Confluence AI Readability Review</h2>
+<p class="subtitle">원문 구조를 유지하면서 수정이 필요한 문구를 노란색으로 표시하고, 오른쪽 패널에서 제안 내용을 빠르게 확인하는 결과 화면 시안입니다.</p>
+
+<div class="mockup">
+  <div class="mockup-header">평가 결과 화면 - 문서 원문 + 수정 제안 패널</div>
+  <div class="mockup-body">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start;">
+      <div style="border:1px solid #d8dee8;border-radius:8px;background:#fff;min-height:560px;padding:24px 30px;font-family:Arial,sans-serif;color:#172033;">
+        <div style="font-size:13px;color:#687386;margin-bottom:18px;">Confluence page preview</div>
+        <h1 style="font-size:28px;line-height:1.25;margin:0 0 18px;">API 장애 대응 절차</h1>
+        <p style="font-size:15px;line-height:1.7;margin:0 0 16px;">
+          이 문서는 운영 중 발생할 수 있는 API 장애에 대해 담당자가
+          <mark id="target-1" style="background:#fff19a;padding:2px 4px;border-radius:3px;">적절히 확인하고 조치한다</mark>
+          는 내용을 설명합니다.
+        </p>
+        <h2 style="font-size:21px;margin:26px 0 12px;">1. 장애 확인</h2>
+        <p style="font-size:15px;line-height:1.7;margin:0 0 12px;">
+          알림을 수신하면 모니터링 대시보드에서 상태를 확인합니다.
+          <mark id="target-2" style="background:#fff19a;padding:2px 4px;border-radius:3px;">문제가 있으면 관련 팀에 공유합니다.</mark>
+        </p>
+        <ul style="font-size:15px;line-height:1.7;margin:0 0 18px 22px;">
+          <li>Grafana 대시보드 확인</li>
+          <li>최근 배포 이력 확인</li>
+          <li>영향 범위 확인</li>
+        </ul>
+        <h2 style="font-size:21px;margin:26px 0 12px;">2. 복구 진행</h2>
+        <p style="font-size:15px;line-height:1.7;margin:0 0 12px;">
+          장애 원인이 최근 배포와 관련되어 있으면 롤백을 검토합니다.
+          <mark id="target-3" style="background:#fff19a;padding:2px 4px;border-radius:3px;">필요 시 적당한 방법으로 복구한다.</mark>
+        </p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:18px;">
+          <tr>
+            <th style="border:1px solid #d8dee8;text-align:left;padding:8px;background:#f5f7fb;">상황</th>
+            <th style="border:1px solid #d8dee8;text-align:left;padding:8px;background:#f5f7fb;">조치</th>
+          </tr>
+          <tr>
+            <td style="border:1px solid #d8dee8;padding:8px;">배포 직후 오류 증가</td>
+            <td style="border:1px solid #d8dee8;padding:8px;">배포 롤백 검토</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="position:sticky;top:16px;border:1px solid #ccd5e3;border-radius:8px;background:#f8fafc;min-height:560px;padding:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <h3 style="margin:0;font-size:17px;">수정 제안</h3>
+          <span style="font-size:12px;color:#506079;background:#e9eef7;border-radius:999px;padding:4px 9px;">3개</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;font-size:13px;">
+          <div style="background:#fff;border:1px solid #dce3ee;border-radius:6px;padding:10px;">
+            <strong style="display:block;font-size:18px;">72</strong>
+            <span style="color:#687386;">AI readability</span>
+          </div>
+          <div style="background:#fff;border:1px solid #dce3ee;border-radius:6px;padding:10px;">
+            <strong style="display:block;font-size:18px;">B</strong>
+            <span style="color:#687386;">등급</span>
+          </div>
+        </div>
+
+        <div class="options" style="display:flex;flex-direction:column;gap:10px;">
+          <div class="option" data-choice="target-1" onclick="toggleSelect(this); document.getElementById('target-1').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+            <div class="content">
+              <h3 style="font-size:14px;margin-bottom:6px;">적절히 확인하고 조치한다</h3>
+              <p style="margin-bottom:6px;"><strong>필요한 내용</strong>: 확인 대상과 조치 기준이 모호합니다.</p>
+              <p style="margin-bottom:6px;"><strong>이유</strong>: AI가 절차의 입력값과 완료 조건을 구분하기 어렵습니다.</p>
+              <p><strong>추천</strong>: "알림 ID, 오류율, 영향 API를 확인한 뒤 심각도 기준에 따라 조치한다."</p>
+            </div>
+          </div>
+          <div class="option" data-choice="target-2" onclick="toggleSelect(this); document.getElementById('target-2').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+            <div class="content">
+              <h3 style="font-size:14px;margin-bottom:6px;">문제가 있으면 관련 팀에 공유합니다.</h3>
+              <p style="margin-bottom:6px;"><strong>필요한 내용</strong>: 공유 조건과 대상 채널이 빠져 있습니다.</p>
+              <p style="margin-bottom:6px;"><strong>이유</strong>: 실행 주체가 다음 행동을 일관되게 판단하기 어렵습니다.</p>
+              <p><strong>추천</strong>: "5분 이상 오류율이 3%를 넘으면 #incident-api 채널에 공유합니다."</p>
+            </div>
+          </div>
+          <div class="option" data-choice="target-3" onclick="toggleSelect(this); document.getElementById('target-3').scrollIntoView({behavior:'smooth', block:'center'});" style="background:#fff;">
+            <div class="content">
+              <h3 style="font-size:14px;margin-bottom:6px;">필요 시 적당한 방법으로 복구한다.</h3>
+              <p style="margin-bottom:6px;"><strong>필요한 내용</strong>: 복구 방법의 우선순위가 필요합니다.</p>
+              <p style="margin-bottom:6px;"><strong>이유</strong>: "필요 시", "적당한" 같은 표현은 자동화 판단에 약합니다.</p>
+              <p><strong>추천</strong>: "최근 배포가 원인이면 롤백을 1순위로 수행하고, 설정 변경이면 이전 설정으로 복원합니다."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

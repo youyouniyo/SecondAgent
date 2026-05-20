@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Confluence AI Readability Agent</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <div class="app-shell">
+        <section class="hero">
+          <div class="hero-head">
+            <div>
+              <div class="eyebrow">AI Readability Checker</div>
+              <h1>Confluence 문서를 AI가 읽기 좋은 문서로 점검하세요</h1>
+            </div>
+            <a class="button" href="/admin/criteria">평가 기준 보기</a>
+          </div>
+          <form id="evaluation-form" class="url-row">
+            <input id="confluence-url" placeholder="https://your-domain.atlassian.net/wiki/spaces/..." required />
+            <button class="button primary" type="submit">평가 시작</button>
+          </form>
+          <div class="url-help">
+            <span>Confluence page URL을 입력하면 문서 구조와 표현을 분석합니다.</span>
+            <span>예상 소요 시간: 약 30초-2분</span>
+          </div>
+        </section>
+
+        <section class="guide-section" aria-label="AI-readable 문서 작성 가이드">
+          <h2>AI-readable 문서는 무엇이 다를까요?</h2>
+          <p class="guide-lead">
+            사람이 읽기 쉬운 문서와 AI가 안정적으로 이해하는 문서는 조금 다릅니다. AI-readable 문서는 절차, 조건, 예외, 용어가 명확해서 검색, 요약, 자동화, Agent 실행에 더 잘 활용됩니다.
+          </p>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <div class="guide-image"></div>
+              <span class="tag blue">명확한 구조</span>
+              <h3>제목, 표, 목록의 역할이 분명해야 합니다</h3>
+              <p>문서의 제목 계층, 절차 목록, 표 데이터가 구분되어 있으면 AI가 문서의 흐름과 근거를 안정적으로 파악할 수 있습니다.</p>
+            </article>
+            <article class="guide-card">
+              <div class="guide-image"></div>
+              <span class="tag green">구체적 조건</span>
+              <h3>모호한 표현보다 판단 기준이 필요합니다</h3>
+              <p>"필요 시", "적절히" 같은 표현은 AI가 실행 조건을 판단하기 어렵습니다. 수치, 상태, 대상, 예외 조건을 함께 적어야 합니다.</p>
+            </article>
+            <article class="guide-card">
+              <div class="guide-image"></div>
+              <span class="tag amber">일관된 용어</span>
+              <h3>같은 개념은 같은 단어로 반복되어야 합니다</h3>
+              <p>같은 대상을 여러 이름으로 부르면 AI가 서로 다른 개념으로 해석할 수 있습니다. 핵심 용어는 문서 전체에서 일관되게 유지합니다.</p>
+            </article>
+            <article class="guide-card">
+              <div class="guide-image"></div>
+              <span class="tag pink">실행 가능한 절차</span>
+              <h3>Agent가 행동으로 옮길 수 있어야 합니다</h3>
+              <p>담당자, 입력값, 실행 순서, 완료 조건이 드러나야 AI Agent가 문서를 단순 요약이 아니라 실제 작업 흐름으로 사용할 수 있습니다.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

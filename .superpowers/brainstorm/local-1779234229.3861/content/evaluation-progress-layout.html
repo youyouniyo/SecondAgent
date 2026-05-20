@@ -1,0 +1,71 @@
+<h2>Evaluation Progress Screen</h2>
+<p class="subtitle">사용자가 평가 시작 후 최종결과 화면으로 이동하기 전, 현재 진행 단계를 확인하는 별도 평가중 화면 시안입니다.</p>
+
+<div class="mockup">
+  <div class="mockup-header">평가중 화면 - 별도 진행 상태 화면</div>
+  <div class="mockup-body">
+    <div style="min-height:620px;background:#fff;border:1px solid #d8dee8;border-radius:8px;color:#172033;display:flex;align-items:center;justify-content:center;padding:36px;">
+      <div style="width:min(760px,100%);">
+        <div style="text-align:center;margin-bottom:28px;">
+          <div style="width:64px;height:64px;border-radius:50%;border:6px solid #dbeafe;border-top-color:#1677ff;margin:0 auto 18px;"></div>
+          <h1 style="font-size:30px;margin:0 0 10px;">평가중입니다</h1>
+          <p style="font-size:15px;line-height:1.7;color:#475467;margin:0;">
+            Confluence 문서를 읽고 AI-readable 기준으로 분석하고 있습니다.<br>
+            여러 LLM이 독립적으로 평가한 뒤, 의견 차이가 큰 항목은 한 번 더 검토합니다.
+          </p>
+        </div>
+
+        <div style="border:1px solid #e3e8f0;background:#f8fafc;border-radius:8px;padding:16px;margin-bottom:18px;">
+          <div style="font-size:12px;color:#667085;margin-bottom:5px;">평가 대상 URL</div>
+          <div style="font-size:14px;color:#344054;word-break:break-all;">https://your-domain.atlassian.net/wiki/spaces/OPS/pages/123456/API-Incident-Runbook</div>
+        </div>
+
+        <div style="border:1px solid #dce3ee;border-radius:8px;background:#fff;padding:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div>
+              <h3 style="font-size:18px;margin:0 0 4px;">현재 단계: 여러 LLM이 독립 평가 중</h3>
+              <p style="font-size:13px;color:#667085;margin:0;">문서 길이에 따라 약 30초-2분 정도 걸릴 수 있습니다.</p>
+            </div>
+            <span style="font-size:13px;color:#3444a0;background:#eef1ff;border-radius:999px;padding:6px 10px;font-weight:700;">4 / 6</span>
+          </div>
+
+          <div style="height:8px;background:#e9eef7;border-radius:999px;overflow:hidden;margin-bottom:18px;">
+            <div style="width:66%;height:100%;background:#1677ff;border-radius:999px;"></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#f0fdf4;border:1px solid #c9ead4;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#22c55e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">✓</span>
+              <span style="font-size:14px;color:#22543d;">Confluence 페이지 불러오기 완료</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#f0fdf4;border:1px solid #c9ead4;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#22c55e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">✓</span>
+              <span style="font-size:14px;color:#22543d;">문서 구조 분석 완료</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#f0fdf4;border:1px solid #c9ead4;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#22c55e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">✓</span>
+              <span style="font-size:14px;color:#22543d;">평가 기준 적용 완료</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#eef6ff;border:1px solid #bfdbfe;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#1677ff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">4</span>
+              <span style="font-size:14px;color:#1d3b6f;font-weight:700;">여러 LLM이 독립 평가 중</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#fff;border:1px solid #e3e8f0;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#eef2f7;color:#667085;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">5</span>
+              <span style="font-size:14px;color:#667085;">모델 간 의견 차이 확인 대기</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:7px;background:#fff;border:1px solid #e3e8f0;">
+              <span style="width:22px;height:22px;border-radius:50%;background:#eef2f7;color:#667085;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;">6</span>
+              <span style="font-size:14px;color:#667085;">최종 결과 정리 대기</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;font-size:13px;color:#667085;">
+          <span>브라우저를 닫지 말고 잠시 기다려주세요.</span>
+          <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:8px 11px;font-size:13px;font-weight:700;">평가 취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,182 @@
+<h2>Admin Criteria Management</h2>
+<p class="subtitle">Admin이 평가 기준 버전을 만들고, 평가항목/평가내용/가중치를 관리한 뒤 활성 버전을 배포하는 화면 시안입니다.</p>
+
+<div class="mockup">
+  <div class="mockup-header">평가 기준 관리 화면 - 버전 관리형</div>
+  <div class="mockup-body">
+    <div style="background:#fff;border:1px solid #d8dee8;border-radius:8px;overflow:hidden;color:#172033;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #e4e9f2;background:#f8fafc;">
+        <div>
+          <div style="font-size:13px;color:#667085;margin-bottom:3px;">Admin</div>
+          <h1 style="font-size:24px;margin:0;">평가 기준 관리</h1>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;">선택 버전 복제</button>
+          <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;">보관 처리</button>
+          <button style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;">활성 버전으로 배포</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:300px minmax(0,1fr);min-height:650px;">
+        <aside style="border-right:1px solid #e4e9f2;background:#fbfcfe;padding:18px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h3 style="font-size:16px;margin:0;">기준 버전</h3>
+            <span style="font-size:12px;color:#146146;background:#e8f6ef;border-radius:999px;padding:4px 8px;">활성 v2.1</span>
+          </div>
+
+          <div class="options" style="display:flex;flex-direction:column;gap:10px;">
+            <div class="option selected" data-choice="v2.1" onclick="toggleSelect(this)" style="background:#eef6ff;border-color:#1677ff;padding:12px;">
+              <div class="content">
+                <h3 style="font-size:14px;">v2.1 AI 운영 문서 기준</h3>
+                <p>활성 버전 · 잠금 · 2026-05-20 배포</p>
+              </div>
+            </div>
+            <div class="option" data-choice="v2.0" onclick="toggleSelect(this)" style="background:#fff;padding:12px;">
+              <div class="content">
+                <h3 style="font-size:14px;">v2.0 절차 문서 보강</h3>
+                <p>비활성 · 잠금 · 평가 128건 사용</p>
+              </div>
+            </div>
+            <div class="option" data-choice="v1.0" onclick="toggleSelect(this)" style="background:#fff;padding:12px;">
+              <div class="content">
+                <h3 style="font-size:14px;">v1.0 초기 기준</h3>
+                <p>비활성 · 보관됨</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:12px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:8px;">버전 메모</div>
+            <p style="font-size:13px;color:#344054;line-height:1.5;margin:0;">평가에 사용된 버전은 수정하거나 삭제할 수 없습니다. 변경하려면 복제해서 새 버전을 만들고, 더 이상 사용하지 않는 버전은 보관 처리합니다.</p>
+          </div>
+        </aside>
+
+        <main style="padding:20px 22px;">
+          <div style="display:grid;grid-template-columns:1fr 260px;gap:16px;margin-bottom:18px;">
+            <div style="border:1px solid #e3e8f0;border-radius:8px;padding:14px;background:#fff;">
+              <label style="display:block;font-size:12px;color:#667085;margin-bottom:5px;">버전명</label>
+              <input class="mock-input" value="v2.1 AI 운영 문서 기준" style="font-size:15px;background:#fff;">
+            </div>
+            <div style="border:1px solid #e3e8f0;border-radius:8px;padding:14px;background:#fff;">
+              <label style="display:block;font-size:12px;color:#667085;margin-bottom:5px;">상태</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span style="font-size:13px;color:#146146;background:#e8f6ef;border-radius:999px;padding:5px 9px;font-weight:700;">활성</span>
+                <span style="font-size:13px;color:#3444a0;background:#eef1ff;border-radius:999px;padding:5px 9px;font-weight:700;">잠금</span>
+                <span style="font-size:13px;color:#667085;">평가에 사용 중</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #dbe5f5;background:#f6f9ff;border-radius:8px;padding:12px 14px;margin-bottom:16px;">
+            <div>
+              <strong style="display:block;font-size:14px;color:#1d3b6f;margin-bottom:2px;">이 버전은 잠금 상태입니다</strong>
+              <span style="font-size:13px;color:#506079;">평가에 사용된 기준이므로 직접 수정하거나 삭제할 수 없습니다. 수정하려면 복제해서 새 버전을 만들고, 더 이상 사용하지 않는 버전은 보관 처리합니다.</span>
+            </div>
+            <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:8px 11px;font-size:13px;font-weight:700;white-space:nowrap;">복제해서 수정</button>
+          </div>
+
+          <section style="border:1px solid #dce3ee;border-radius:8px;background:#fff;overflow:hidden;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;border-bottom:1px solid #e4e9f2;">
+              <div>
+                <h3 style="font-size:17px;margin:0 0 3px;">다중 LLM 평가 설정</h3>
+                <p style="font-size:13px;color:#667085;margin:0;">모델 간 점수 차이가 클 때 Aggregator가 재판정하도록 기준을 설정합니다.</p>
+              </div>
+              <span style="font-size:12px;color:#3444a0;background:#eef1ff;border-radius:999px;padding:5px 9px;font-weight:700;">Admin 조정 가능</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:14px 16px;">
+              <div style="border:1px solid #edf1f6;border-radius:7px;padding:12px;background:#fbfcfe;">
+                <label style="display:block;font-size:12px;color:#667085;margin-bottom:5px;">기본 불일치 threshold</label>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <input class="mock-input" value="20" style="font-size:15px;background:#fff;text-align:right;">
+                  <span style="font-size:13px;color:#667085;">점</span>
+                </div>
+              </div>
+              <div style="border:1px solid #edf1f6;border-radius:7px;padding:12px;background:#fbfcfe;">
+                <label style="display:block;font-size:12px;color:#667085;margin-bottom:5px;">최종 점수 기본값</label>
+                <select class="mock-input" style="font-size:15px;background:#fff;">
+                  <option>중앙값</option>
+                  <option>평균</option>
+                </select>
+              </div>
+              <div style="border:1px solid #edf1f6;border-radius:7px;padding:12px;background:#fbfcfe;">
+                <label style="display:block;font-size:12px;color:#667085;margin-bottom:5px;">재판정 방식</label>
+                <select class="mock-input" style="font-size:15px;background:#fff;">
+                  <option>불일치 항목만 Aggregator 재판정</option>
+                  <option>전체 항목 Aggregator 검토</option>
+                </select>
+              </div>
+            </div>
+            <div style="padding:0 16px 14px;">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                  <th style="text-align:left;padding:9px;border-bottom:1px solid #edf1f6;color:#667085;">평가 항목</th>
+                  <th style="width:160px;text-align:right;padding:9px;border-bottom:1px solid #edf1f6;color:#667085;">개별 threshold</th>
+                  <th style="width:180px;text-align:left;padding:9px;border-bottom:1px solid #edf1f6;color:#667085;">재판정 조건</th>
+                </tr>
+                <tr><td style="padding:9px;border-bottom:1px solid #f2f4f7;">구조 명확성</td><td style="padding:9px;text-align:right;border-bottom:1px solid #f2f4f7;">20점</td><td style="padding:9px;border-bottom:1px solid #f2f4f7;">최고점-최저점 차이</td></tr>
+                <tr><td style="padding:9px;border-bottom:1px solid #f2f4f7;">맥락 충분성</td><td style="padding:9px;text-align:right;border-bottom:1px solid #f2f4f7;">15점</td><td style="padding:9px;border-bottom:1px solid #f2f4f7;">최고점-최저점 차이</td></tr>
+                <tr><td style="padding:9px;">AI 활용 적합성</td><td style="padding:9px;text-align:right;">10점</td><td style="padding:9px;">최고점-최저점 차이</td></tr>
+              </table>
+            </div>
+          </section>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h2 style="font-size:20px;margin:0;">평가항목 및 가중치</h2>
+            <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:8px 11px;font-size:13px;font-weight:700;">평가항목 추가</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <section style="border:1px solid #dce3ee;border-radius:8px;background:#fff;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;border-bottom:1px solid #e4e9f2;">
+                <div>
+                  <h3 style="font-size:17px;margin:0 0 3px;">구조 명확성</h3>
+                  <p style="font-size:13px;color:#667085;margin:0;">제목, 목록, 표, 섹션 구조가 AI가 이해하기 쉽게 분리되어 있는지 평가</p>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:12px;color:#667085;">항목 내 가중치 합계</div>
+                  <strong style="font-size:18px;color:#146146;">100%</strong>
+                </div>
+              </div>
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                  <th style="text-align:left;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">평가 내용</th>
+                  <th style="width:120px;text-align:right;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">가중치</th>
+                  <th style="width:110px;text-align:center;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">상태</th>
+                </tr>
+                <tr><td style="padding:10px;border-bottom:1px solid #f2f4f7;">제목 계층이 논리적으로 구성되어 있다</td><td style="padding:10px;text-align:right;border-bottom:1px solid #f2f4f7;">40%</td><td style="padding:10px;text-align:center;border-bottom:1px solid #f2f4f7;">활성</td></tr>
+                <tr><td style="padding:10px;border-bottom:1px solid #f2f4f7;">절차와 설명 문단이 분리되어 있다</td><td style="padding:10px;text-align:right;border-bottom:1px solid #f2f4f7;">35%</td><td style="padding:10px;text-align:center;border-bottom:1px solid #f2f4f7;">활성</td></tr>
+                <tr><td style="padding:10px;">표나 목록의 의미가 명확하다</td><td style="padding:10px;text-align:right;">25%</td><td style="padding:10px;text-align:center;">활성</td></tr>
+              </table>
+            </section>
+
+            <section style="border:1px solid #dce3ee;border-radius:8px;background:#fff;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;border-bottom:1px solid #e4e9f2;">
+                <div>
+                  <h3 style="font-size:17px;margin:0 0 3px;">맥락 충분성</h3>
+                  <p style="font-size:13px;color:#667085;margin:0;">문서만 읽어도 판단 조건, 전제, 예외를 이해할 수 있는지 평가</p>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:12px;color:#667085;">항목 내 가중치 합계</div>
+                  <strong style="font-size:18px;color:#d08b13;">90%</strong>
+                </div>
+              </div>
+              <div style="padding:12px 16px;background:#fff7e6;border-bottom:1px solid #f2dfb0;color:#8a5a00;font-size:13px;">
+                가중치 합계가 100%가 아닙니다. 이 평가항목은 저장할 수 있지만 배포할 수 없습니다.
+              </div>
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <tr>
+                  <th style="text-align:left;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">평가 내용</th>
+                  <th style="width:120px;text-align:right;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">가중치</th>
+                  <th style="width:110px;text-align:center;padding:10px;border-bottom:1px solid #edf1f6;color:#667085;">상태</th>
+                </tr>
+                <tr><td style="padding:10px;border-bottom:1px solid #f2f4f7;">전제 조건이 문서 안에 명시되어 있다</td><td style="padding:10px;text-align:right;border-bottom:1px solid #f2f4f7;">30%</td><td style="padding:10px;text-align:center;border-bottom:1px solid #f2f4f7;">활성</td></tr>
+                <tr><td style="padding:10px;border-bottom:1px solid #f2f4f7;">예외 상황과 후속 조치가 포함되어 있다</td><td style="padding:10px;text-align:right;border-bottom:1px solid #f2f4f7;">35%</td><td style="padding:10px;text-align:center;border-bottom:1px solid #f2f4f7;">활성</td></tr>
+                <tr><td style="padding:10px;">담당자 또는 책임 주체가 명확하다</td><td style="padding:10px;text-align:right;">25%</td><td style="padding:10px;text-align:center;">활성</td></tr>
+              </table>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>

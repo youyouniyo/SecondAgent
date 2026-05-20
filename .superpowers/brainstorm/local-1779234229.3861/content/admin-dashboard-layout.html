@@ -1,0 +1,137 @@
+<h2>Admin Dashboard</h2>
+<p class="subtitle">Admin이 평가 기준, 평가 이력, 시스템 상태를 한 화면에서 확인하고 각 관리 화면으로 이동하는 대시보드 시안입니다.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Admin Dashboard - 운영 요약 및 관리 진입점</div>
+  <div class="mockup-body">
+    <div style="background:#fff;border:1px solid #d8dee8;border-radius:8px;overflow:hidden;color:#172033;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid #e4e9f2;background:#f8fafc;">
+        <div>
+          <div style="font-size:13px;color:#667085;margin-bottom:4px;">Admin</div>
+          <h1 style="font-size:26px;margin:0;">AI Readability 운영 대시보드</h1>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;">Main 화면으로</button>
+          <button style="border:0;background:#1677ff;color:#fff;border-radius:6px;padding:9px 12px;font-size:13px;font-weight:700;">평가 기준 관리</button>
+        </div>
+      </div>
+
+      <div style="padding:22px 24px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;">
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">오늘 평가</div>
+            <strong style="display:block;font-size:28px;line-height:1;color:#172033;">42</strong>
+            <span style="font-size:12px;color:#146146;">어제 대비 +12%</span>
+          </div>
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">일일 평가자수</div>
+            <strong style="display:block;font-size:28px;line-height:1;color:#172033;">17</strong>
+            <span style="font-size:12px;color:#667085;">오늘 고유 사용자</span>
+          </div>
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">평균 점수</div>
+            <strong style="display:block;font-size:28px;line-height:1;color:#172033;">74</strong>
+            <span style="font-size:12px;color:#667085;">최근 7일 기준</span>
+          </div>
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">AI추천용어 적용율</div>
+            <strong style="display:block;font-size:28px;line-height:1;color:#172033;">46%</strong>
+            <span style="font-size:12px;color:#146146;">반영된 추천 비율</span>
+          </div>
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">Aggregator 재판정</div>
+            <strong style="display:block;font-size:28px;line-height:1;color:#172033;">18%</strong>
+            <span style="font-size:12px;color:#8a5a00;">불일치 항목 비율</span>
+          </div>
+          <div style="border:1px solid #e3e8f0;border-radius:8px;background:#fff;padding:16px;">
+            <div style="font-size:12px;color:#667085;margin-bottom:6px;">활성 기준 버전</div>
+            <strong style="display:block;font-size:22px;line-height:1.2;color:#172033;">v2.1</strong>
+            <span style="font-size:12px;color:#146146;">정상 배포 중</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+          <div style="border:1px solid #dce3ee;border-radius:8px;background:#fbfcfe;padding:18px;min-height:190px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <h3 style="font-size:18px;margin:0;">평가 기준 관리</h3>
+              <span style="font-size:12px;color:#146146;background:#e8f6ef;border-radius:999px;padding:4px 8px;">활성 v2.1</span>
+            </div>
+            <p style="font-size:14px;line-height:1.6;color:#475467;margin:0 0 16px;">평가 기준 버전, 평가항목, 평가내용, 가중치, 다중 LLM threshold를 관리합니다.</p>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;font-size:13px;color:#344054;">
+              <span>잠금 버전 2개</span>
+              <span>보관 버전 1개</span>
+              <span>배포 전 검증 오류 0개</span>
+            </div>
+            <button style="width:100%;border:0;background:#1677ff;color:#fff;border-radius:6px;padding:10px;font-size:13px;font-weight:700;">관리하기</button>
+          </div>
+
+          <div style="border:1px solid #dce3ee;border-radius:8px;background:#fbfcfe;padding:18px;min-height:190px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <h3 style="font-size:18px;margin:0;">평가 이력</h3>
+              <span style="font-size:12px;color:#37506f;background:#e6eef8;border-radius:999px;padding:4px 8px;">Admin 전용</span>
+            </div>
+            <p style="font-size:14px;line-height:1.6;color:#475467;margin:0 0 16px;">전체 평가 요청, 결과, 모델별 판단, Aggregator 재판정, 오류 로그를 조회합니다.</p>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;font-size:13px;color:#344054;">
+              <span>최근 실패 2건</span>
+              <span>재판정 포함 평가 8건</span>
+              <span>반영 상태 저장 평가 15건</span>
+            </div>
+            <button style="width:100%;border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:10px;font-size:13px;font-weight:700;">이력 보기</button>
+          </div>
+
+          <div style="border:1px solid #dce3ee;border-radius:8px;background:#fbfcfe;padding:18px;min-height:190px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <h3 style="font-size:18px;margin:0;">시스템 설정</h3>
+              <span style="font-size:12px;color:#146146;background:#e8f6ef;border-radius:999px;padding:4px 8px;">정상</span>
+            </div>
+            <p style="font-size:14px;line-height:1.6;color:#475467;margin:0 0 16px;">Confluence 연결, LLM 모델, 평가 timeout, 재시도 정책, 안내 문구를 확인합니다.</p>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;font-size:13px;color:#344054;">
+              <span>Confluence 연결 정상</span>
+              <span>평가 모델 3개 활성</span>
+              <span>Aggregator 모델 1개 활성</span>
+            </div>
+            <button style="width:100%;border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:10px;font-size:13px;font-weight:700;">설정 보기</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:16px;">
+          <div style="border:1px solid #dce3ee;border-radius:8px;background:#fff;padding:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <h3 style="font-size:18px;margin:0;">최근 평가 이력</h3>
+              <button style="border:1px solid #cbd5e1;background:#fff;color:#344054;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;">전체 보기</button>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <tr>
+                <th style="text-align:left;padding:8px;border-bottom:1px solid #edf1f6;color:#667085;">문서</th>
+                <th style="text-align:right;padding:8px;border-bottom:1px solid #edf1f6;color:#667085;">점수</th>
+                <th style="text-align:center;padding:8px;border-bottom:1px solid #edf1f6;color:#667085;">등급</th>
+                <th style="text-align:center;padding:8px;border-bottom:1px solid #edf1f6;color:#667085;">상태</th>
+              </tr>
+              <tr><td style="padding:9px;border-bottom:1px solid #f2f4f7;">API 장애 대응 절차</td><td style="padding:9px;text-align:right;border-bottom:1px solid #f2f4f7;">72</td><td style="padding:9px;text-align:center;border-bottom:1px solid #f2f4f7;">B</td><td style="padding:9px;text-align:center;border-bottom:1px solid #f2f4f7;">완료</td></tr>
+              <tr><td style="padding:9px;border-bottom:1px solid #f2f4f7;">배포 체크리스트</td><td style="padding:9px;text-align:right;border-bottom:1px solid #f2f4f7;">81</td><td style="padding:9px;text-align:center;border-bottom:1px solid #f2f4f7;">A</td><td style="padding:9px;text-align:center;border-bottom:1px solid #f2f4f7;">완료</td></tr>
+              <tr><td style="padding:9px;">권한 신청 가이드</td><td style="padding:9px;text-align:right;">-</td><td style="padding:9px;text-align:center;">-</td><td style="padding:9px;text-align:center;color:#b42318;">실패</td></tr>
+            </table>
+          </div>
+
+          <div style="border:1px solid #dce3ee;border-radius:8px;background:#fff;padding:16px;">
+            <h3 style="font-size:18px;margin:0 0 12px;">운영 알림</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="border-left:3px solid #d08b13;background:#fff7e6;padding:10px 12px;border-radius:6px;">
+                <strong style="display:block;font-size:13px;color:#8a5a00;margin-bottom:3px;">실패 평가 2건</strong>
+                <span style="font-size:13px;color:#6d5100;">Confluence 접근 권한 오류를 확인하세요.</span>
+              </div>
+              <div style="border-left:3px solid #1677ff;background:#eef6ff;padding:10px 12px;border-radius:6px;">
+                <strong style="display:block;font-size:13px;color:#1d3b6f;margin-bottom:3px;">기준 버전 정상</strong>
+                <span style="font-size:13px;color:#1d3b6f;">활성 기준 v2.1의 가중치 검증이 통과되었습니다.</span>
+              </div>
+              <div style="border-left:3px solid #27845f;background:#e8f6ef;padding:10px 12px;border-radius:6px;">
+                <strong style="display:block;font-size:13px;color:#146146;margin-bottom:3px;">LLM 모델 정상</strong>
+                <span style="font-size:13px;color:#146146;">3개 평가 모델과 Aggregator가 응답 중입니다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

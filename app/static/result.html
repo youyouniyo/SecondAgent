@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>평가 결과</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="result-top-card">
+        <div class="result-action">
+          <a class="button primary" href="/">새 평가 시작하기</a>
+        </div>
+        <div class="summary-grid">
+          <article class="panel summary-panel">
+            <div class="summary-head">
+              <div>
+                <h2>문서 전체 평가 요약</h2>
+                <div id="summary-meta" class="summary-meta"></div>
+              </div>
+              <span class="pill">AI readable: 보완 필요</span>
+            </div>
+            <p id="summary" class="summary-text"></p>
+            <div class="score-badges">
+              <div class="score-box dark">
+                <strong id="score-number">-</strong>
+                <span>점수</span>
+              </div>
+              <div class="score-box grade">
+                <strong id="grade-letter">-</strong>
+                <span>등급</span>
+              </div>
+              <div id="score-note" class="score-note"></div>
+            </div>
+          </article>
+          <article class="panel score-panel">
+            <h2>평가 항목별 점수표</h2>
+            <table>
+              <thead>
+                <tr><th>평가 항목</th><th>점수</th><th>등급</th></tr>
+              </thead>
+              <tbody id="score-table"></tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <section class="result-layout">
+        <article class="panel preview-panel">
+          <div class="preview-header">
+            <div class="preview-title">Confluence page preview</div>
+            <button id="copy-body" class="button">본문 Copy</button>
+          </div>
+          <div id="preview-body" class="preview-body"></div>
+        </article>
+        <aside class="panel suggestion-panel">
+          <div class="suggestion-head">
+            <h2>문구별 수정 제안</h2>
+            <span id="suggestion-count" class="pill">0개</span>
+          </div>
+          <div id="suggestions"></div>
+        </aside>
+      </section>
+
+      <div class="notice">
+        <div>
+          <h3>평가 결과 확정 전 안내</h3>
+          <p>
+            수정 된 페이지는 컨플런스에 직접 반영이 불가하여 본문을 Copy하여 직접 반영이 필요 합니다.
+            확정 후에는 현재 반영/원복 상태가 저장되고 포인트가 적립됩니다.
+          </p>
+        </div>
+        <button id="confirm-result" class="button primary wide">확정</button>
+      </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
