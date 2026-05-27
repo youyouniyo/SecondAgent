@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>평가 기준 관리 - Confluence AI Readability Agent</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="app-shell">
+      <header class="shell-header">
+        <div>
+          <h1 class="shell-title">평가 기준 관리</h1>
+          <p class="eyebrow">Admin Dashboard</p>
+        </div>
+        <div class="nav">
+          <a href="/admin" class="button">← 대시보드로</a>
+        </div>
+      </header>
+
+      <section class="shell-body">
+        <!-- 버전 선택 영역 -->
+        <div style="margin-bottom: 24px; padding: 16px; background: var(--panel); border-radius: 6px;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="flex: 1;">
+              <label style="display: block; margin-bottom: 6px; font-weight: 500;">기준 버전 선택</label>
+              <select id="versionSelect" style="width: 100%; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px;">
+                <option value="">버전을 선택하세요...</option>
+              </select>
+            </div>
+            <button class="button btn-primary" onclick="showCreateVersionModal()" style="margin-top: 20px;">+ 새 버전 생성</button>
+          </div>
+        </div>
+
+        <!-- 탭 메뉴 -->
+        <div class="criteria-tabs">
+          <button class="tab-button active" onclick="switchTab('versions-tab')">기준 버전 관리</button>
+          <button class="tab-button" onclick="switchTab('items-tab')">평가항목 관리</button>
+          <button class="tab-button" onclick="switchTab('details-tab')">평가내용 관리</button>
+        </div>
+
+        <!-- 탭 1: 기준 버전 관리 -->
+        <div id="versions-tab" class="tab-content active">
+          <h3>등록된 기준 버전</h3>
+          <table class="criteria-table">
+            <thead>
+              <tr>
+                <th>버전명</th>
+                <th>상태</th>
+                <th>항목 수</th>
+                <th>생성일</th>
+                <th>작업</th>
+              </tr>
+            </thead>
+            <tbody id="versionsTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--muted); padding: 40px;">버전을 선택하세요.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 탭 2: 평가항목 관리 -->
+        <div id="items-tab" class="tab-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3>평가항목</h3>
+            <button class="button btn-primary" onclick="showAddItemModal()" id="addItemBtn" style="display: none;">+ 항목 추가</button>
+          </div>
+          <table class="criteria-table">
+            <thead>
+              <tr>
+                <th>항목명</th>
+                <th>설명</th>
+                <th>순서</th>
+                <th>내용 수</th>
+                <th>작업</th>
+              </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--muted); padding: 40px;">버전을 선택하세요.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 탭 3: 평가내용 관리 -->
+        <div id="details-tab" class="tab-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3>평가내용</h3>
+            <button class="button btn-primary" onclick="showAddDetailModal()" id="addDetailBtn" style="display: none;">+ 내용 추가</button>
+          </div>
+          <div id="detailsInfo" style="display: none; margin-bottom: 12px;">
+            <p style="margin: 0 0 8px 0; color: var(--muted);">선택 항목: <strong id="selectedItemName"></strong></p>
+          </div>
+          <table class="criteria-table">
+            <thead>
+              <tr>
+                <th>평가내용</th>
+                <th>가중치 (%)</th>
+                <th>작업</th>
+              </tr>
+            </thead>
+            <tbody id="detailsTableBody">
+              <tr>
+                <td colspan="3" style="text-align: center; color: var(--muted); padding: 40px;">항목을 선택하세요.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="weightValidation" style="display: none;"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- 버전 생성 모달 -->
+  <div class="modal" id="createVersionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>새 기준 버전 생성</h3>
+        <button class="modal-close" onclick="closeModal('createVersionModal')">×</button>
+      </div>
+      <div class="form-group">
+        <label>버전명</label>
+        <input type="text" id="newVersionName" placeholder="예: 기본 평가 기준 v2" />
+      </div>
+      <div class="modal-footer">
+        <button class="button" onclick="closeModal('createVersionModal')">취소</button>
+        <button class="button btn-primary" onclick="createVersion()">생성</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 항목 추가/수정 모달 -->
+  <div class="modal" id="itemModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="itemModalTitle">평가항목 추가</h3>
+        <button class="modal-close" onclick="closeModal('itemModal')">×</button>
+      </div>
+      <div class="form-group">
+        <label>항목명</label>
+        <input type="text" id="itemName" placeholder="예: 구조 명확성" />
+      </div>
+      <div class="form-group">
+        <label>설명</label>
+        <textarea id="itemDescription" placeholder="항목에 대한 설명을 입력하세요."></textarea>
+      </div>
+      <div class="form-group">
+        <label>순서</label>
+        <input type="number" id="itemOrder" placeholder="1" min="1" />
+      </div>
+      <div class="modal-footer">
+        <button class="button" onclick="closeModal('itemModal')">취소</button>
+        <button class="button btn-primary" onclick="saveItem()">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 내용 추가/수정 모달 -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="detailModalTitle">평가내용 추가</h3>
+        <button class="modal-close" onclick="closeModal('detailModal')">×</button>
+      </div>
+      <div class="form-group">
+        <label>평가내용</label>
+        <textarea id="detailContent" placeholder="평가 기준을 설명하세요."></textarea>
+      </div>
+      <div class="form-group">
+        <label>가중치 (%)</label>
+        <input type="number" id="detailWeight" placeholder="0" min="0" max="100" />
+      </div>
+      <div class="modal-footer">
+        <button class="button" onclick="closeModal('detailModal')">취소</button>
+        <button class="button btn-primary" onclick="saveDetail()">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    // 버전 선택 변경
+    document.getElementById('versionSelect').addEventListener('change', (e) => {
+      const versionId = parseInt(e.target.value);
+      if (versionId) {
+        loadVersionDetail(versionId);
+      }
+    });
+  </script>
+</body>
+</html>

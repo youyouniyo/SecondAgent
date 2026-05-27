@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2200" viewBox="0 0 1500 2200" role="img" aria-labelledby="title desc">
+  <title id="title">사용자 호출부터 평가 확정까지의 Flow Chart</title>
+  <desc id="desc">사용자 Confluence URL 입력, 평가 요청, LLM 평가, Aggregator 판단, 결과 저장, 제안 반영, 결과 확정까지의 전체 흐름도</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f8fc; }
+      .title { fill: #101828; font: 800 34px Arial, "Noto Sans KR", sans-serif; }
+      .subtitle { fill: #667085; font: 400 16px Arial, "Noto Sans KR", sans-serif; }
+      .group { fill: #fff; stroke: #d6e0ed; stroke-width: 1.5; }
+      .group-title { fill: #344054; font: 800 18px Arial, "Noto Sans KR", sans-serif; }
+      .box { fill: #fff; stroke: #b8c7d9; stroke-width: 2; }
+      .box-blue { fill: #eaf4ff; stroke: #1677ff; }
+      .box-green { fill: #e8f6ef; stroke: #27845f; }
+      .box-yellow { fill: #fff4d8; stroke: #d08b13; }
+      .box-purple { fill: #f0edff; stroke: #7a5af8; }
+      .diamond { fill: #fffaf0; stroke: #d08b13; stroke-width: 2; }
+      .text { fill: #172033; font: 800 16px Arial, "Noto Sans KR", sans-serif; }
+      .small { fill: #52657d; font: 400 13px Arial, "Noto Sans KR", sans-serif; }
+      .arrow { stroke: #52657d; stroke-width: 2.4; fill: none; marker-end: url(#arrowhead); }
+      .arrow-soft { stroke: #8c9bb0; stroke-width: 2.2; fill: none; marker-end: url(#arrowhead-soft); }
+      .label { fill: #344054; font: 800 13px Arial, "Noto Sans KR", sans-serif; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52657d"/>
+    </marker>
+    <marker id="arrowhead-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8c9bb0"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="2200"/>
+  <text x="72" y="68" class="title">사용자 호출부터 평가 확정까지의 Flow Chart</text>
+  <text x="72" y="100" class="subtitle">요청하신 Mermaid flowchart TD 구조를 기준으로 생성한 SVG 이미지</text>
+
+  <rect x="48" y="130" width="1404" height="310" rx="16" class="group"/>
+  <text x="76" y="164" class="group-title">1. 평가 요청 생성</text>
+
+  <rect x="110" y="205" width="230" height="76" rx="11" class="box box-blue"/>
+  <text x="225" y="235" text-anchor="middle" class="text">사용자</text>
+  <text x="225" y="258" text-anchor="middle" class="small">Confluence URL 입력</text>
+
+  <rect x="430" y="205" width="230" height="76" rx="11" class="box box-blue"/>
+  <text x="545" y="235" text-anchor="middle" class="text">평가 시작</text>
+  <text x="545" y="258" text-anchor="middle" class="small">버튼 클릭</text>
+
+  <rect x="750" y="205" width="230" height="76" rx="11" class="box box-blue"/>
+  <text x="865" y="235" text-anchor="middle" class="text">POST</text>
+  <text x="865" y="258" text-anchor="middle" class="small">/api/evaluations</text>
+
+  <rect x="585" y="335" width="230" height="76" rx="11" class="box box-green"/>
+  <text x="700" y="365" text-anchor="middle" class="text">사용자 포인트 지급</text>
+  <text x="700" y="388" text-anchor="middle" class="small">request +1</text>
+
+  <rect x="1030" y="205" width="230" height="76" rx="11" class="box"/>
+  <text x="1145" y="235" text-anchor="middle" class="text">Evaluation Job 생성</text>
+  <text x="1145" y="258" text-anchor="middle" class="small">status: queued</text>
+
+  <path class="arrow" d="M 340 243 H 420"/>
+  <path class="arrow" d="M 660 243 H 740"/>
+  <path class="arrow" d="M 980 243 H 1020"/>
+  <path class="arrow-soft" d="M 865 281 V 316 H 700 V 325"/>
+
+  <rect x="48" y="470" width="1404" height="420" rx="16" class="group"/>
+  <text x="76" y="504" class="group-title">2. 백그라운드 평가 파이프라인</text>
+
+  <rect x="170" y="540" width="270" height="76" rx="11" class="box"/>
+  <text x="305" y="570" text-anchor="middle" class="text">Background Task 시작</text>
+  <text x="305" y="593" text-anchor="middle" class="small">run_evaluation_pipeline</text>
+
+  <rect x="530" y="540" width="230" height="76" rx="11" class="box"/>
+  <text x="645" y="570" text-anchor="middle" class="text">Confluence 문서 조회</text>
+  <text x="645" y="593" text-anchor="middle" class="small">page HTML 수집</text>
+
+  <rect x="850" y="540" width="260" height="76" rx="11" class="box"/>
+  <text x="980" y="570" text-anchor="middle" class="text">문서 구조 분석</text>
+  <text x="980" y="593" text-anchor="middle" class="small">HTML / Text 정규화</text>
+
+  <rect x="585" y="680" width="230" height="76" rx="11" class="box"/>
+  <text x="700" y="710" text-anchor="middle" class="text">활성 평가 기준 로드</text>
+  <text x="700" y="733" text-anchor="middle" class="small">active criteria version</text>
+
+  <rect x="905" y="680" width="230" height="76" rx="11" class="box box-blue"/>
+  <text x="1020" y="710" text-anchor="middle" class="text">여러 LLM 독립 평가</text>
+  <text x="1020" y="733" text-anchor="middle" class="small">동일 문서 / 동일 기준</text>
+
+  <rect x="585" y="800" width="230" height="76" rx="11" class="box"/>
+  <text x="700" y="830" text-anchor="middle" class="text">모델별 평가 결과 저장</text>
+  <text x="700" y="853" text-anchor="middle" class="small">raw / parsed result</text>
+
+  <rect x="905" y="800" width="230" height="76" rx="11" class="box"/>
+  <text x="1020" y="830" text-anchor="middle" class="text">모델 점수 차이 비교</text>
+  <text x="1020" y="853" text-anchor="middle" class="small">spread vs threshold</text>
+
+  <path class="arrow" d="M 1145 281 V 455 H 305 V 530"/>
+  <path class="arrow" d="M 440 578 H 520"/>
+  <path class="arrow" d="M 760 578 H 840"/>
+  <path class="arrow" d="M 980 616 V 648 H 700 V 670"/>
+  <path class="arrow" d="M 815 718 H 895"/>
+  <path class="arrow" d="M 1020 756 V 778 H 700 V 790"/>
+  <path class="arrow" d="M 815 838 H 895"/>
+
+  <rect x="48" y="920" width="1404" height="350" rx="16" class="group"/>
+  <text x="76" y="954" class="group-title">3. 최종 점수 및 제안 생성</text>
+
+  <polygon points="750,1000 910,1080 750,1160 590,1080" class="diamond"/>
+  <text x="750" y="1068" text-anchor="middle" class="text">점수 차이가</text>
+  <text x="750" y="1092" text-anchor="middle" class="small">threshold 이상인가?</text>
+
+  <rect x="1030" y="1042" width="250" height="76" rx="11" class="box box-yellow"/>
+  <text x="1155" y="1072" text-anchor="middle" class="text">Aggregator LLM 재판단</text>
+  <text x="1155" y="1095" text-anchor="middle" class="small">불일치 항목 검토</text>
+
+  <rect x="220" y="1042" width="260" height="76" rx="11" class="box"/>
+  <text x="350" y="1072" text-anchor="middle" class="text">평균/중앙값 기반</text>
+  <text x="350" y="1095" text-anchor="middle" class="small">최종 점수 계산</text>
+
+  <rect x="600" y="1180" width="300" height="76" rx="11" class="box box-purple"/>
+  <text x="750" y="1210" text-anchor="middle" class="text">최종 점수 / 제안 생성</text>
+  <text x="750" y="1233" text-anchor="middle" class="small">overall score + suggestions</text>
+
+  <path class="arrow" d="M 1020 876 V 900 H 750 V 990"/>
+  <path class="arrow" d="M 910 1080 H 1020"/>
+  <text x="960" y="1064" class="label">예</text>
+  <path class="arrow" d="M 590 1080 H 490"/>
+  <text x="525" y="1064" class="label">아니오</text>
+  <path class="arrow" d="M 1155 1118 V 1148 H 750 V 1170"/>
+  <path class="arrow" d="M 350 1118 V 1148 H 750 V 1170"/>
+
+  <rect x="48" y="1300" width="1404" height="250" rx="16" class="group"/>
+  <text x="76" y="1334" class="group-title">4. 결과 저장 및 Job 완료</text>
+
+  <rect x="120" y="1395" width="250" height="76" rx="11" class="box box-green"/>
+  <text x="245" y="1425" text-anchor="middle" class="text">Evaluation Result 저장</text>
+  <text x="245" y="1448" text-anchor="middle" class="small">최종 평가 결과</text>
+
+  <rect x="460" y="1395" width="250" height="76" rx="11" class="box box-green"/>
+  <text x="585" y="1425" text-anchor="middle" class="text">Criteria Scores 저장</text>
+  <text x="585" y="1448" text-anchor="middle" class="small">항목별 점수</text>
+
+  <rect x="800" y="1395" width="250" height="76" rx="11" class="box box-green"/>
+  <text x="925" y="1425" text-anchor="middle" class="text">Suggestions 저장</text>
+  <text x="925" y="1448" text-anchor="middle" class="small">AI 수정 제안</text>
+
+  <rect x="1140" y="1395" width="250" height="76" rx="11" class="box box-green"/>
+  <text x="1265" y="1425" text-anchor="middle" class="text">Job 완료 처리</text>
+  <text x="1265" y="1448" text-anchor="middle" class="small">status: completed</text>
+
+  <path class="arrow" d="M 750 1256 V 1284 H 245 V 1385"/>
+  <path class="arrow" d="M 370 1433 H 450"/>
+  <path class="arrow" d="M 710 1433 H 790"/>
+  <path class="arrow" d="M 1050 1433 H 1130"/>
+
+  <rect x="48" y="1580" width="1404" height="280" rx="16" class="group"/>
+  <text x="76" y="1614" class="group-title">5. 결과 화면 확인</text>
+
+  <rect x="110" y="1670" width="250" height="76" rx="11" class="box box-blue"/>
+  <text x="235" y="1700" text-anchor="middle" class="text">사용자 결과 화면 이동</text>
+  <text x="235" y="1723" text-anchor="middle" class="small">/result/{result_id}</text>
+
+  <rect x="450" y="1670" width="250" height="76" rx="11" class="box"/>
+  <text x="575" y="1700" text-anchor="middle" class="text">결과 요약 / 점수 확인</text>
+  <text x="575" y="1723" text-anchor="middle" class="small">summary + score</text>
+
+  <rect x="790" y="1670" width="250" height="76" rx="11" class="box"/>
+  <text x="915" y="1700" text-anchor="middle" class="text">문서 Preview 확인</text>
+  <text x="915" y="1723" text-anchor="middle" class="small">current_html</text>
+
+  <rect x="1130" y="1670" width="250" height="76" rx="11" class="box"/>
+  <text x="1255" y="1700" text-anchor="middle" class="text">AI 수정 제안 확인</text>
+  <text x="1255" y="1723" text-anchor="middle" class="small">suggestion cards</text>
+
+  <path class="arrow" d="M 1265 1471 V 1558 H 235 V 1660"/>
+  <path class="arrow" d="M 360 1708 H 440"/>
+  <path class="arrow" d="M 700 1708 H 780"/>
+  <path class="arrow" d="M 1040 1708 H 1120"/>
+
+  <rect x="48" y="1890" width="1404" height="250" rx="16" class="group"/>
+  <text x="76" y="1924" class="group-title">6. 제안 반영 및 결과 확정</text>
+
+  <polygon points="245,1965 380,2032 245,2099 110,2032" class="diamond"/>
+  <text x="245" y="2026" text-anchor="middle" class="text">제안 반영?</text>
+
+  <rect x="470" y="1950" width="280" height="76" rx="11" class="box box-blue"/>
+  <text x="610" y="1980" text-anchor="middle" class="text">POST apply</text>
+  <text x="610" y="2003" text-anchor="middle" class="small">/api/suggestions/{id}/apply</text>
+
+  <rect x="470" y="2045" width="280" height="76" rx="11" class="box"/>
+  <text x="610" y="2075" text-anchor="middle" class="text">POST revert</text>
+  <text x="610" y="2098" text-anchor="middle" class="small">/api/suggestions/{id}/revert</text>
+
+  <rect x="825" y="1998" width="230" height="76" rx="11" class="box box-green"/>
+  <text x="940" y="2028" text-anchor="middle" class="text">Preview 갱신</text>
+  <text x="940" y="2051" text-anchor="middle" class="small">DB 상태 저장</text>
+
+  <rect x="1130" y="1950" width="230" height="76" rx="11" class="box"/>
+  <text x="1245" y="1980" text-anchor="middle" class="text">본문 Copy</text>
+  <text x="1245" y="2003" text-anchor="middle" class="small">clipboard</text>
+
+  <rect x="1130" y="2045" width="230" height="76" rx="11" class="box"/>
+  <text x="1245" y="2075" text-anchor="middle" class="text">결과 확정</text>
+  <text x="1245" y="2098" text-anchor="middle" class="small">confirm +2 포인트</text>
+
+  <path class="arrow" d="M 1255 1746 V 1870 H 245 V 1955"/>
+  <path class="arrow" d="M 380 2032 H 430 V 1988 H 460"/>
+  <text x="400" y="1980" class="label">반영</text>
+  <path class="arrow" d="M 380 2032 H 430 V 2083 H 460"/>
+  <text x="400" y="2115" class="label">원복</text>
+  <path class="arrow" d="M 750 1988 H 790 V 2036 H 815"/>
+  <path class="arrow" d="M 750 2083 H 790 V 2036 H 815"/>
+  <path class="arrow" d="M 1055 2036 H 1090 V 1988 H 1120"/>
+  <path class="arrow" d="M 1245 2026 V 2035"/>
+  <path class="arrow-soft" d="M 1245 2121 V 2155 H 610 V 2140"/>
+  <text x="650" y="2168" class="label">사용자가 Confluence에 직접 반영 후 POST /api/results/{id}/confirm</text>
+</svg>

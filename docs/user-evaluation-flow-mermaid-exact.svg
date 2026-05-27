@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2700" viewBox="0 0 1600 2700" role="img" aria-labelledby="title desc">
+  <title id="title">Mermaid Flowchart TD - 사용자 호출부터 평가 확정까지</title>
+  <desc id="desc">사용자가 제공한 Mermaid flowchart TD 내용을 동일한 노드와 연결 흐름으로 옮긴 SVG 이미지</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { fill: #111827; font: 800 36px Arial, "Noto Sans KR", sans-serif; }
+      .subtitle { fill: #667085; font: 400 16px Arial, "Noto Sans KR", sans-serif; }
+      .node { fill: #fff; stroke: #94a3b8; stroke-width: 2; }
+      .node-blue { fill: #eff6ff; stroke: #2563eb; }
+      .node-green { fill: #ecfdf3; stroke: #16a34a; }
+      .node-amber { fill: #fffbeb; stroke: #d97706; }
+      .decision { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; }
+      .text { fill: #172033; font: 800 17px Arial, "Noto Sans KR", sans-serif; }
+      .small { fill: #475467; font: 500 14px Arial, "Noto Sans KR", sans-serif; }
+      .code { fill: #172033; font: 800 15px Consolas, "Courier New", monospace; }
+      .edge { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .edge-soft { stroke: #64748b; stroke-width: 2.3; fill: none; marker-end: url(#arrow-soft); }
+      .label { fill: #334155; font: 800 14px Arial, "Noto Sans KR", sans-serif; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1600" height="2700"/>
+  <text x="80" y="70" class="title">사용자 호출부터 평가 확정까지</text>
+  <text x="80" y="104" class="subtitle">Mermaid flowchart TD 원문 기준 SVG 변환</text>
+
+  <!-- A, B, C -->
+  <rect x="650" y="150" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="800" y="184" text-anchor="middle" class="text">A. 사용자</text>
+  <text x="800" y="210" text-anchor="middle" class="small">Confluence URL 입력</text>
+
+  <rect x="650" y="285" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="800" y="319" text-anchor="middle" class="text">B. 평가 시작 버튼 클릭</text>
+
+  <rect x="650" y="420" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="800" y="454" text-anchor="middle" class="text">C. POST</text>
+  <text x="800" y="480" text-anchor="middle" class="code">/api/evaluations</text>
+
+  <path class="edge" d="M 800 232 V 275"/>
+  <path class="edge" d="M 800 367 V 410"/>
+
+  <!-- D, E -->
+  <rect x="300" y="560" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="450" y="594" text-anchor="middle" class="text">D. 사용자 포인트 지급</text>
+  <text x="450" y="620" text-anchor="middle" class="small">request +1</text>
+
+  <rect x="1000" y="560" width="300" height="82" rx="10" class="node"/>
+  <text x="1150" y="594" text-anchor="middle" class="text">E. Evaluation Job 생성</text>
+  <text x="1150" y="620" text-anchor="middle" class="small">status: queued</text>
+
+  <path class="edge-soft" d="M 800 502 V 532 H 450 V 550"/>
+  <path class="edge" d="M 800 502 V 532 H 1150 V 550"/>
+
+  <!-- F to L -->
+  <rect x="650" y="715" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="749" text-anchor="middle" class="text">F. Background Task 시작</text>
+  <text x="800" y="775" text-anchor="middle" class="small">run_evaluation_pipeline</text>
+
+  <rect x="650" y="850" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="884" text-anchor="middle" class="text">G. Confluence 문서 조회</text>
+
+  <rect x="650" y="985" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="1019" text-anchor="middle" class="text">H. 문서 구조 분석</text>
+  <text x="800" y="1045" text-anchor="middle" class="small">HTML / Text 정규화</text>
+
+  <rect x="650" y="1120" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="1154" text-anchor="middle" class="text">I. 활성 평가 기준 로드</text>
+
+  <rect x="650" y="1255" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="800" y="1289" text-anchor="middle" class="text">J. 여러 LLM 독립 평가</text>
+
+  <rect x="650" y="1390" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="1424" text-anchor="middle" class="text">K. 모델별 평가 결과 저장</text>
+
+  <rect x="650" y="1525" width="300" height="82" rx="10" class="node"/>
+  <text x="800" y="1559" text-anchor="middle" class="text">L. 모델 점수 차이 비교</text>
+
+  <path class="edge" d="M 1150 642 V 681 H 800 V 705"/>
+  <path class="edge" d="M 800 797 V 840"/>
+  <path class="edge" d="M 800 932 V 975"/>
+  <path class="edge" d="M 800 1067 V 1110"/>
+  <path class="edge" d="M 800 1202 V 1245"/>
+  <path class="edge" d="M 800 1337 V 1380"/>
+  <path class="edge" d="M 800 1472 V 1515"/>
+
+  <!-- M branch -->
+  <polygon points="800,1665 970,1745 800,1825 630,1745" class="decision"/>
+  <text x="800" y="1735" text-anchor="middle" class="text">M. 점수 차이가</text>
+  <text x="800" y="1761" text-anchor="middle" class="small">threshold 이상인가?</text>
+  <path class="edge" d="M 800 1607 V 1655"/>
+
+  <rect x="1040" y="1704" width="300" height="82" rx="10" class="node node-amber"/>
+  <text x="1190" y="1738" text-anchor="middle" class="text">N. Aggregator LLM 재판단</text>
+
+  <rect x="260" y="1704" width="300" height="82" rx="10" class="node"/>
+  <text x="410" y="1738" text-anchor="middle" class="text">P. 평균/중앙값 기반</text>
+  <text x="410" y="1764" text-anchor="middle" class="small">최종 점수 계산</text>
+
+  <rect x="650" y="1880" width="300" height="82" rx="10" class="node node-amber"/>
+  <text x="800" y="1914" text-anchor="middle" class="text">O. 최종 점수 / 제안 생성</text>
+
+  <path class="edge" d="M 970 1745 H 1030"/>
+  <text x="1000" y="1728" text-anchor="middle" class="label">예</text>
+  <path class="edge" d="M 630 1745 H 570"/>
+  <text x="600" y="1728" text-anchor="middle" class="label">아니오</text>
+  <path class="edge" d="M 1190 1786 V 1840 H 800 V 1870"/>
+  <path class="edge" d="M 410 1786 V 1840 H 800 V 1870"/>
+
+  <!-- Q to T -->
+  <rect x="120" y="2035" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="270" y="2069" text-anchor="middle" class="text">Q. Evaluation Result 저장</text>
+
+  <rect x="470" y="2035" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="620" y="2069" text-anchor="middle" class="text">R. Criteria Scores 저장</text>
+
+  <rect x="820" y="2035" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="970" y="2069" text-anchor="middle" class="text">S. Suggestions 저장</text>
+
+  <rect x="1170" y="2035" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="1320" y="2069" text-anchor="middle" class="text">T. Job 완료 처리</text>
+  <text x="1320" y="2095" text-anchor="middle" class="small">status: completed</text>
+
+  <path class="edge" d="M 800 1962 V 1998 H 270 V 2025"/>
+  <path class="edge" d="M 420 2076 H 460"/>
+  <path class="edge" d="M 770 2076 H 810"/>
+  <path class="edge" d="M 1120 2076 H 1160"/>
+
+  <!-- U to X -->
+  <rect x="1170" y="2200" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="1320" y="2234" text-anchor="middle" class="text">U. 사용자 결과 화면 이동</text>
+
+  <rect x="820" y="2200" width="300" height="82" rx="10" class="node"/>
+  <text x="970" y="2234" text-anchor="middle" class="text">V. 결과 요약 / 점수 확인</text>
+
+  <rect x="470" y="2200" width="300" height="82" rx="10" class="node"/>
+  <text x="620" y="2234" text-anchor="middle" class="text">W. 문서 Preview 확인</text>
+
+  <rect x="120" y="2200" width="300" height="82" rx="10" class="node"/>
+  <text x="270" y="2234" text-anchor="middle" class="text">X. AI 수정 제안 확인</text>
+
+  <path class="edge" d="M 1320 2117 V 2190"/>
+  <path class="edge" d="M 1170 2241 H 1130"/>
+  <path class="edge" d="M 820 2241 H 780"/>
+  <path class="edge" d="M 470 2241 H 430"/>
+
+  <!-- Y branch and final -->
+  <polygon points="270,2360 410,2425 270,2490 130,2425" class="decision"/>
+  <text x="270" y="2432" text-anchor="middle" class="text">Y. 제안 반영?</text>
+  <path class="edge" d="M 270 2282 V 2350"/>
+
+  <rect x="500" y="2335" width="330" height="82" rx="10" class="node node-blue"/>
+  <text x="665" y="2369" text-anchor="middle" class="text">Z. POST apply</text>
+  <text x="665" y="2395" text-anchor="middle" class="code">/api/suggestions/{id}/apply</text>
+
+  <rect x="500" y="2445" width="330" height="82" rx="10" class="node"/>
+  <text x="665" y="2479" text-anchor="middle" class="text">AA. POST revert</text>
+  <text x="665" y="2505" text-anchor="middle" class="code">/api/suggestions/{id}/revert</text>
+
+  <rect x="910" y="2390" width="300" height="82" rx="10" class="node node-green"/>
+  <text x="1060" y="2424" text-anchor="middle" class="text">AB. Preview 갱신</text>
+  <text x="1060" y="2450" text-anchor="middle" class="small">DB 상태 저장</text>
+
+  <rect x="1250" y="2390" width="250" height="82" rx="10" class="node"/>
+  <text x="1375" y="2424" text-anchor="middle" class="text">AC. 본문 Copy</text>
+
+  <rect x="950" y="2555" width="330" height="82" rx="10" class="node"/>
+  <text x="1115" y="2589" text-anchor="middle" class="text">AD. 사용자가 Confluence에</text>
+  <text x="1115" y="2615" text-anchor="middle" class="small">직접 반영</text>
+
+  <rect x="590" y="2555" width="250" height="82" rx="10" class="node"/>
+  <text x="715" y="2589" text-anchor="middle" class="text">AE. 결과 확정</text>
+
+  <rect x="250" y="2555" width="300" height="82" rx="10" class="node node-blue"/>
+  <text x="400" y="2589" text-anchor="middle" class="text">AF. POST confirm</text>
+  <text x="400" y="2615" text-anchor="middle" class="code">/api/results/{id}/confirm</text>
+
+  <rect x="40" y="2555" width="170" height="82" rx="10" class="node node-green"/>
+  <text x="125" y="2589" text-anchor="middle" class="text">AG. 확정 포인트</text>
+  <text x="125" y="2615" text-anchor="middle" class="small">confirm +2</text>
+
+  <path class="edge" d="M 410 2425 H 455 V 2376 H 490"/>
+  <text x="445" y="2360" text-anchor="middle" class="label">반영</text>
+  <path class="edge" d="M 410 2425 H 455 V 2486 H 490"/>
+  <text x="445" y="2516" text-anchor="middle" class="label">원복</text>
+  <path class="edge" d="M 830 2376 H 875 V 2431 H 900"/>
+  <path class="edge" d="M 830 2486 H 875 V 2431 H 900"/>
+  <path class="edge" d="M 1210 2431 H 1240"/>
+  <path class="edge" d="M 1375 2472 V 2528 H 1115 V 2545"/>
+  <path class="edge" d="M 950 2596 H 850"/>
+  <path class="edge" d="M 590 2596 H 560"/>
+  <path class="edge" d="M 250 2596 H 220"/>
+</svg>

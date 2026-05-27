@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="360" viewBox="0 0 980 360" role="img" aria-labelledby="title desc">
+  <title id="title">GET /api/results/{id} 최종 결과 반환 흐름</title>
+  <desc id="desc">결과 화면이 FastAPI 서버에 GET /api/results/{id}를 호출하고 서버가 최종 결과를 반환하는 흐름</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f8fc; }
+      .title { fill: #101828; font: 800 28px Arial, "Noto Sans KR", sans-serif; }
+      .subtitle { fill: #667085; font: 400 15px Arial, "Noto Sans KR", sans-serif; }
+      .box { fill: #fff; stroke: #b8c7d9; stroke-width: 2; }
+      .box-blue { fill: #eaf4ff; stroke: #1677ff; }
+      .box-green { fill: #e8f6ef; stroke: #27845f; }
+      .text { fill: #172033; font: 800 18px Arial, "Noto Sans KR", sans-serif; }
+      .small { fill: #52657d; font: 400 14px Arial, "Noto Sans KR", sans-serif; }
+      .code { fill: #172033; font: 800 17px Consolas, "Courier New", monospace; }
+      .arrow { stroke: #52657d; stroke-width: 2.6; fill: none; marker-end: url(#arrowhead); }
+      .arrow-return { stroke: #27845f; stroke-width: 2.6; fill: none; marker-end: url(#arrowhead-green); stroke-dasharray: 8 6; }
+      .label { fill: #344054; font: 800 14px Arial, "Noto Sans KR", sans-serif; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52657d"/>
+    </marker>
+    <marker id="arrowhead-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#27845f"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="980" height="360"/>
+  <text x="48" y="58" class="title">결과 조회 API 흐름</text>
+  <text x="48" y="88" class="subtitle">선택한 기준: GET /api/results/{id} → 최종 결과 반환</text>
+
+  <rect x="70" y="150" width="220" height="92" rx="12" class="box box-blue"/>
+  <text x="180" y="187" text-anchor="middle" class="text">결과 화면</text>
+  <text x="180" y="214" text-anchor="middle" class="small">사용자가 평가 결과 확인</text>
+
+  <rect x="380" y="140" width="250" height="112" rx="12" class="box"/>
+  <text x="505" y="176" text-anchor="middle" class="text">FastAPI</text>
+  <text x="505" y="204" text-anchor="middle" class="code">GET /api/results/{id}</text>
+  <text x="505" y="228" text-anchor="middle" class="small">read_result(result_id)</text>
+
+  <rect x="720" y="150" width="220" height="92" rx="12" class="box box-green"/>
+  <text x="830" y="187" text-anchor="middle" class="text">최종 결과 반환</text>
+  <text x="830" y="214" text-anchor="middle" class="small">summary, score, suggestions</text>
+
+  <path class="arrow" d="M 290 196 H 370"/>
+  <text x="330" y="180" text-anchor="middle" class="label">요청</text>
+
+  <path class="arrow" d="M 630 196 H 710"/>
+  <text x="670" y="180" text-anchor="middle" class="label">조회</text>
+
+  <path class="arrow-return" d="M 720 248 C 610 308 390 308 290 248"/>
+  <text x="505" y="319" text-anchor="middle" class="label">JSON 응답으로 최종 결과 반환</text>
+</svg>

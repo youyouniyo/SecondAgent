@@ -4,14 +4,40 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.database import initialize_database
+from app.database import db_connection, initialize_database
 from app.schemas import (
     ConfirmResultResponse,
+    CriteriaItemCreateRequest,
+    CriteriaItemDetailCreateRequest,
+    CriteriaItemDetailUpdateRequest,
+    CriteriaItemUpdateRequest,
+    CriteriaVersionActivateResponse,
+    CriteriaVersionCreate,
+    CriteriaVersionUpdate,
     EvaluationCreateRequest,
     ReviewCreateRequest,
     SuggestionActionResponse,
+    WeightValidationResponse,
 )
-from app.services.criteria_repository import get_active_criteria
+from app.services.criteria_repository import (
+    add_criteria_item,
+    add_criteria_item_detail,
+    archive_criteria_version,
+    create_criteria_version,
+    delete_criteria_item,
+    delete_criteria_item_detail,
+    delete_criteria_version,
+    duplicate_criteria_version,
+    get_active_criteria,
+    get_all_criteria_versions,
+    get_criteria_version_by_id,
+    lock_criteria_version,
+    update_criteria_item,
+    update_criteria_item_detail,
+    update_criteria_version,
+    validate_item_weights,
+    activate_criteria_version,
+)
 from app.services.evaluation_graph import run_evaluation_pipeline
 from app.services.evaluation_repository import (
     add_points,
@@ -70,6 +96,11 @@ def admin_page() -> FileResponse:
 @app.get("/admin/criteria")
 def admin_criteria_page() -> FileResponse:
     return page_response("criteria.html")
+
+
+@app.get("/admin/criteria-manage")
+def admin_criteria_manage_page() -> FileResponse:
+    return page_response("criteria-manage.html")
 
 
 @app.post("/api/evaluations")
@@ -151,3 +182,180 @@ def active_criteria_api() -> dict:
     """현재 활성 평가 기준을 조회하는 API입니다."""
 
     return get_active_criteria()
+
+
+def verify_admin_role() -> None:
+    """Admin 권한을 검증합니다."""
+
+    user_id = get_demo_user_id()
+    with db_connection() as conn:
+        user = conn.execute("SELECT role FROM users WHERE id = ?", (user_id,)).fetchone()
+        if user is None or user["role"] != "admin":
+            raise HTTPException(status_code=403, detail="관리자 권한이 필요합니다.")
+
+
+@app.get("/api/admin/criteria/versions")
+def list_criteria_versions() -> list:
+    """모든 평가 기준 버전 목록을 조회합니다."""
+
+    verify_admin_role()
+    return get_all_criteria_versions()
+
+
+@app.post("/api/admin/criteria/versions")
+def create_criteria_version_api(request: CriteriaVersionCreate) -> dict:
+    """새로운 draft 상태의 평가 기준 버전을 생성합니다."""
+
+    verify_admin_role()
+    return create_criteria_version(request.version_name)
+
+
+@app.get("/api/admin/criteria/versions/{version_id}")
+def get_criteria_version_api(version_id: int) -> dict:
+    """평가 기준 버전을 상세 조회합니다 (항목 및 내용 포함)."""
+
+    verify_admin_role()
+    result = get_criteria_version_by_id(version_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="기준 버전을 찾을 수 없습니다.")
+    return result
+
+
+@app.put("/api/admin/criteria/versions/{version_id}")
+def update_criteria_version_api(version_id: int, request: CriteriaVersionUpdate) -> dict:
+    """평가 기준 버전 정보를 수정합니다 (draft 상태만 가능)."""
+
+    verify_admin_role()
+    result = update_criteria_version(version_id, request.version_name)
+    if result is None:
+        raise HTTPException(status_code=400, detail="draft 상태인 버전만 수정 가능합니다.")
+    return result
+
+
+@app.post("/api/admin/criteria/versions/{version_id}/activate")
+def activate_version_api(version_id: int) -> CriteriaVersionActivateResponse:
+    """평가 기준 버전을 활성화합니다 (기존 active는 archived로)."""
+
+    verify_admin_role()
+    try:
+        return activate_criteria_version(version_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/admin/criteria/versions/{version_id}/duplicate")
+def duplicate_version_api(version_id: int, request: CriteriaVersionCreate) -> dict:
+    """평가 기준 버전을 복제합니다 (전체 항목 및 내용 포함)."""
+
+    verify_admin_role()
+    result = duplicate_criteria_version(version_id, request.version_name)
+    if result is None:
+        raise HTTPException(status_code=400, detail="버전을 복제할 수 없습니다.")
+    return result
+
+
+@app.post("/api/admin/criteria/versions/{version_id}/archive")
+def archive_version_api(version_id: int) -> dict:
+    """평가 기준 버전을 보관 처리합니다."""
+
+    verify_admin_role()
+    try:
+        result = archive_criteria_version(version_id)
+        if result is None:
+            raise HTTPException(status_code=400, detail="버전을 보관할 수 없습니다.")
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.delete("/api/admin/criteria/versions/{version_id}")
+def delete_version_api(version_id: int) -> dict:
+    """평가 기준 버전을 삭제합니다 (draft/archived만 가능)."""
+
+    verify_admin_role()
+    success = delete_criteria_version(version_id)
+    if not success:
+        raise HTTPException(
+            status_code=400,
+            detail="draft/archived 상태인 버전만 삭제 가능합니다.",
+        )
+    return {"deleted": True, "version_id": version_id}
+
+
+@app.post("/api/admin/criteria/versions/{version_id}/items")
+def add_criteria_item_api(version_id: int, request: CriteriaItemCreateRequest) -> dict:
+    """평가항목을 추가합니다."""
+
+    verify_admin_role()
+    result = add_criteria_item(version_id, request.name, request.description, request.display_order)
+    if result is None:
+        raise HTTPException(status_code=400, detail="평가항목을 추가할 수 없습니다.")
+    return result
+
+
+@app.put("/api/admin/criteria/items/{item_id}")
+def update_criteria_item_api(item_id: int, request: CriteriaItemUpdateRequest) -> dict:
+    """평가항목을 수정합니다 (draft 버전만)."""
+
+    verify_admin_role()
+    result = update_criteria_item(item_id, request.name, request.description, request.display_order)
+    if result is None:
+        raise HTTPException(status_code=400, detail="draft 상태인 버전의 항목만 수정 가능합니다.")
+    return result
+
+
+@app.delete("/api/admin/criteria/items/{item_id}")
+def delete_criteria_item_api(item_id: int) -> dict:
+    """평가항목을 삭제합니다 (draft 버전만)."""
+
+    verify_admin_role()
+    success = delete_criteria_item(item_id)
+    if not success:
+        raise HTTPException(status_code=400, detail="draft 상태인 버전의 항목만 삭제 가능합니다.")
+    return {"deleted": True, "item_id": item_id}
+
+
+@app.post("/api/admin/criteria/items/{item_id}/details")
+def add_criteria_detail_api(item_id: int, request: CriteriaItemDetailCreateRequest) -> dict:
+    """평가내용을 추가합니다."""
+
+    verify_admin_role()
+    result = add_criteria_item_detail(item_id, request.evaluation_content, request.weight)
+    if result is None:
+        raise HTTPException(status_code=400, detail="평가내용을 추가할 수 없습니다.")
+    return result
+
+
+@app.put("/api/admin/criteria/items/details/{detail_id}")
+def update_criteria_detail_api(detail_id: int, request: CriteriaItemDetailUpdateRequest) -> dict:
+    """평가내용을 수정합니다 (draft 버전만)."""
+
+    verify_admin_role()
+    result = update_criteria_item_detail(detail_id, request.evaluation_content, request.weight)
+    if result is None:
+        raise HTTPException(status_code=400, detail="draft 상태인 버전의 내용만 수정 가능합니다.")
+    return result
+
+
+@app.delete("/api/admin/criteria/items/details/{detail_id}")
+def delete_criteria_detail_api(detail_id: int) -> dict:
+    """평가내용을 삭제합니다 (draft 버전만)."""
+
+    verify_admin_role()
+    success = delete_criteria_item_detail(detail_id)
+    if not success:
+        raise HTTPException(status_code=400, detail="draft 상태인 버전의 내용만 삭제 가능합니다.")
+    return {"deleted": True, "detail_id": detail_id}
+
+
+@app.get("/api/admin/criteria/items/{item_id}/weights-valid")
+def validate_item_weights_api(item_id: int) -> WeightValidationResponse:
+    """항목의 가중치 합계를 검증합니다."""
+
+    verify_admin_role()
+    total_weight, is_valid = validate_item_weights(item_id)
+    return WeightValidationResponse(
+        valid=is_valid,
+        total_weight=total_weight,
+        message="가중치 합계가 100%입니다." if is_valid else f"가중치 합계가 {total_weight}%입니다. (100% 필요)",
+    )

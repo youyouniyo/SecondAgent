@@ -207,8 +207,410 @@ async function setupCriteriaPage() {
     .join("");
 }
 
+const criteriaManageState = {
+  versions: [],
+  currentVersion: null,
+  selectedItemId: null,
+  editingItemId: null,
+  editingDetailId: null,
+};
+
+async function readError(response) {
+  const text = await response.text();
+  try {
+    const data = JSON.parse(text);
+    return data.detail || text;
+  } catch {
+    return text || "요청 처리 중 오류가 발생했습니다.";
+  }
+}
+
+async function requestJson(url, options = {}) {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(await readError(response));
+  }
+  if (response.status === 204) return null;
+  return response.json();
+}
+
+async function putJson(url, body = {}) {
+  return requestJson(url, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+async function deleteJson(url) {
+  return requestJson(url, { method: "DELETE" });
+}
+
+async function setupAdminCriteriaManagePage() {
+  const versionSelect = document.getElementById("versionSelect");
+  if (!versionSelect) return;
+  await loadCriteriaVersions();
+}
+
+async function loadCriteriaVersions(selectedVersionId = null) {
+  const versions = await requestJson("/api/admin/criteria/versions");
+  criteriaManageState.versions = versions;
+  renderVersionSelect(selectedVersionId);
+  renderVersionsTable();
+
+  const versionId = selectedVersionId || versions[0]?.id;
+  if (versionId) {
+    document.getElementById("versionSelect").value = String(versionId);
+    await loadVersionDetail(versionId);
+  }
+}
+
+function renderVersionSelect(selectedVersionId) {
+  const select = document.getElementById("versionSelect");
+  select.innerHTML = `<option value="">버전을 선택하세요...</option>`;
+  criteriaManageState.versions.forEach((version) => {
+    const option = document.createElement("option");
+    option.value = version.id;
+    option.textContent = `${version.version_name} (${statusLabel(version.status)})`;
+    if (selectedVersionId && Number(selectedVersionId) === version.id) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+}
+
+function statusLabel(status) {
+  const labels = { draft: "작성 중", active: "활성", archived: "보관", locked: "잠김" };
+  return labels[status] || status;
+}
+
+function renderVersionsTable() {
+  const tbody = document.getElementById("versionsTableBody");
+  if (!criteriaManageState.versions.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">등록된 기준 버전이 없습니다.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = criteriaManageState.versions.map((version) => {
+    const isDraft = version.status === "draft";
+    const isActive = version.status === "active";
+    const canDelete = version.status === "draft" || version.status === "archived";
+    return `
+      <tr>
+        <td>${escapeHtml(version.version_name)}</td>
+        <td><span class="status-badge status-${escapeHtml(version.status)}">${statusLabel(version.status)}</span></td>
+        <td>${version.item_count}</td>
+        <td>${new Date(version.created_at).toLocaleString()}</td>
+        <td>
+          <div class="button-group">
+            <button class="btn-small" onclick="selectVersion(${version.id})">보기</button>
+            <button class="btn-small" onclick="duplicateVersion(${version.id})">복제</button>
+            ${isDraft ? `<button class="btn-small" onclick="activateVersion(${version.id})">활성화</button>` : ""}
+            ${!isActive ? `<button class="btn-small" onclick="archiveVersion(${version.id})">보관</button>` : ""}
+            ${canDelete ? `<button class="btn-small btn-danger" onclick="deleteVersion(${version.id})">삭제</button>` : ""}
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+async function selectVersion(versionId) {
+  document.getElementById("versionSelect").value = String(versionId);
+  await loadVersionDetail(versionId);
+}
+
+async function loadVersionDetail(versionId) {
+  if (!versionId) return;
+  const version = await requestJson(`/api/admin/criteria/versions/${versionId}`);
+  criteriaManageState.currentVersion = version;
+  criteriaManageState.selectedItemId = version.items[0]?.id || null;
+  renderItemsTable();
+  renderDetailsTable();
+}
+
+function renderItemsTable() {
+  const version = criteriaManageState.currentVersion;
+  const tbody = document.getElementById("itemsTableBody");
+  const isDraft = version?.status === "draft";
+  document.getElementById("addItemBtn").style.display = isDraft ? "inline-flex" : "none";
+
+  if (!version) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">버전을 선택하세요.</td></tr>`;
+    return;
+  }
+  if (!version.items.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">평가항목이 없습니다.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = version.items.map((item) => `
+    <tr>
+      <td>${escapeHtml(item.name)}</td>
+      <td>${escapeHtml(item.description)}</td>
+      <td>${item.display_order}</td>
+      <td>${item.details.length}</td>
+      <td>
+        <div class="button-group">
+          <button class="btn-small" onclick="selectItem(${item.id})">내용 관리</button>
+          ${isDraft ? `<button class="btn-small" onclick="showEditItemModal(${item.id})">수정</button>` : ""}
+          ${isDraft ? `<button class="btn-small btn-danger" onclick="deleteItem(${item.id})">삭제</button>` : ""}
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function renderDetailsTable() {
+  const version = criteriaManageState.currentVersion;
+  const item = findSelectedItem();
+  const tbody = document.getElementById("detailsTableBody");
+  const isDraft = version?.status === "draft";
+
+  document.getElementById("addDetailBtn").style.display = item && isDraft ? "inline-flex" : "none";
+  document.getElementById("detailsInfo").style.display = item ? "block" : "none";
+  document.getElementById("selectedItemName").textContent = item?.name || "";
+
+  if (!item) {
+    tbody.innerHTML = `<tr><td colspan="3" class="empty-state">항목을 선택하세요.</td></tr>`;
+    document.getElementById("weightValidation").style.display = "none";
+    return;
+  }
+  if (!item.details.length) {
+    tbody.innerHTML = `<tr><td colspan="3" class="empty-state">평가내용이 없습니다.</td></tr>`;
+  } else {
+    tbody.innerHTML = item.details.map((detail) => `
+      <tr>
+        <td>${escapeHtml(detail.evaluation_content)}</td>
+        <td>${detail.weight}%</td>
+        <td>
+          <div class="button-group">
+            ${isDraft ? `<button class="btn-small" onclick="showEditDetailModal(${detail.id})">수정</button>` : ""}
+            ${isDraft ? `<button class="btn-small btn-danger" onclick="deleteDetail(${detail.id})">삭제</button>` : ""}
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+  validateSelectedItemWeights();
+}
+
+function findSelectedItem() {
+  const version = criteriaManageState.currentVersion;
+  if (!version || !criteriaManageState.selectedItemId) return null;
+  return version.items.find((item) => item.id === criteriaManageState.selectedItemId) || null;
+}
+
+function selectItem(itemId) {
+  criteriaManageState.selectedItemId = itemId;
+  switchTab("details-tab");
+  renderDetailsTable();
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll(".tab-button").forEach((button) => button.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
+  document.querySelector(`[onclick="switchTab('${tabId}')"]`)?.classList.add("active");
+  document.getElementById(tabId)?.classList.add("active");
+}
+
+function showModal(id) {
+  document.getElementById(id).classList.add("active");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("active");
+}
+
+function showCreateVersionModal() {
+  document.getElementById("newVersionName").value = "";
+  showModal("createVersionModal");
+}
+
+async function createVersion() {
+  const versionName = document.getElementById("newVersionName").value.trim();
+  if (!versionName) return alert("버전명을 입력하세요.");
+  try {
+    const version = await postJson("/api/admin/criteria/versions", { version_name: versionName });
+    closeModal("createVersionModal");
+    await loadCriteriaVersions(version.id);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function duplicateVersion(versionId) {
+  const source = criteriaManageState.versions.find((version) => version.id === versionId);
+  const versionName = prompt("복제할 새 버전명을 입력하세요.", `${source?.version_name || "평가 기준"} 복사본`);
+  if (!versionName) return;
+  try {
+    const version = await postJson(`/api/admin/criteria/versions/${versionId}/duplicate`, { version_name: versionName });
+    await loadCriteriaVersions(version.id);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function activateVersion(versionId) {
+  if (!confirm("가중치 검증을 통과한 경우 이 버전을 활성 기준으로 배포합니다.")) return;
+  try {
+    await postJson(`/api/admin/criteria/versions/${versionId}/activate`);
+    await loadCriteriaVersions(versionId);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function archiveVersion(versionId) {
+  if (!confirm("이 버전을 보관 처리할까요?")) return;
+  try {
+    await postJson(`/api/admin/criteria/versions/${versionId}/archive`);
+    await loadCriteriaVersions(versionId);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function deleteVersion(versionId) {
+  if (!confirm("이 기준 버전을 삭제할까요? 평가에 사용된 버전은 삭제할 수 없습니다.")) return;
+  try {
+    await deleteJson(`/api/admin/criteria/versions/${versionId}`);
+    await loadCriteriaVersions();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function showAddItemModal() {
+  criteriaManageState.editingItemId = null;
+  document.getElementById("itemModalTitle").textContent = "평가항목 추가";
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemDescription").value = "";
+  document.getElementById("itemOrder").value = criteriaManageState.currentVersion.items.length + 1;
+  showModal("itemModal");
+}
+
+function showEditItemModal(itemId) {
+  const item = criteriaManageState.currentVersion.items.find((entry) => entry.id === itemId);
+  if (!item) return;
+  criteriaManageState.editingItemId = itemId;
+  document.getElementById("itemModalTitle").textContent = "평가항목 수정";
+  document.getElementById("itemName").value = item.name;
+  document.getElementById("itemDescription").value = item.description;
+  document.getElementById("itemOrder").value = item.display_order;
+  showModal("itemModal");
+}
+
+async function saveItem() {
+  const version = criteriaManageState.currentVersion;
+  if (!version) return;
+  const payload = {
+    name: document.getElementById("itemName").value.trim(),
+    description: document.getElementById("itemDescription").value.trim(),
+    display_order: Number(document.getElementById("itemOrder").value),
+  };
+  if (!payload.name || !payload.description || !payload.display_order) {
+    return alert("항목명, 설명, 순서를 모두 입력하세요.");
+  }
+
+  try {
+    if (criteriaManageState.editingItemId) {
+      await putJson(`/api/admin/criteria/items/${criteriaManageState.editingItemId}`, payload);
+    } else {
+      await postJson(`/api/admin/criteria/versions/${version.id}/items`, payload);
+    }
+    closeModal("itemModal");
+    await loadVersionDetail(version.id);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function deleteItem(itemId) {
+  if (!confirm("이 평가항목과 하위 평가내용을 삭제할까요?")) return;
+  try {
+    await deleteJson(`/api/admin/criteria/items/${itemId}`);
+    await loadVersionDetail(criteriaManageState.currentVersion.id);
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function showAddDetailModal() {
+  criteriaManageState.editingDetailId = null;
+  document.getElementById("detailModalTitle").textContent = "평가내용 추가";
+  document.getElementById("detailContent").value = "";
+  document.getElementById("detailWeight").value = "";
+  showModal("detailModal");
+}
+
+function showEditDetailModal(detailId) {
+  const item = findSelectedItem();
+  const detail = item?.details.find((entry) => entry.id === detailId);
+  if (!detail) return;
+  criteriaManageState.editingDetailId = detailId;
+  document.getElementById("detailModalTitle").textContent = "평가내용 수정";
+  document.getElementById("detailContent").value = detail.evaluation_content;
+  document.getElementById("detailWeight").value = detail.weight;
+  showModal("detailModal");
+}
+
+async function saveDetail() {
+  const item = findSelectedItem();
+  if (!item) return alert("평가항목을 먼저 선택하세요.");
+  const payload = {
+    evaluation_content: document.getElementById("detailContent").value.trim(),
+    weight: Number(document.getElementById("detailWeight").value),
+  };
+  if (!payload.evaluation_content || Number.isNaN(payload.weight) || payload.weight < 0 || payload.weight > 100) {
+    return alert("평가내용과 0~100 사이의 가중치를 입력하세요.");
+  }
+
+  try {
+    if (criteriaManageState.editingDetailId) {
+      await putJson(`/api/admin/criteria/items/details/${criteriaManageState.editingDetailId}`, payload);
+    } else {
+      await postJson(`/api/admin/criteria/items/${item.id}/details`, payload);
+    }
+    closeModal("detailModal");
+    await loadVersionDetail(criteriaManageState.currentVersion.id);
+    criteriaManageState.selectedItemId = item.id;
+    renderDetailsTable();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function deleteDetail(detailId) {
+  if (!confirm("이 평가내용을 삭제할까요?")) return;
+  const selectedItemId = criteriaManageState.selectedItemId;
+  try {
+    await deleteJson(`/api/admin/criteria/items/details/${detailId}`);
+    await loadVersionDetail(criteriaManageState.currentVersion.id);
+    criteriaManageState.selectedItemId = selectedItemId;
+    renderDetailsTable();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function validateSelectedItemWeights() {
+  const item = findSelectedItem();
+  const box = document.getElementById("weightValidation");
+  if (!item) return;
+  try {
+    const result = await requestJson(`/api/admin/criteria/items/${item.id}/weights-valid`);
+    box.style.display = "block";
+    box.className = `weight-info ${result.valid ? "weight-valid" : "weight-warning"}`;
+    box.textContent = result.message;
+  } catch {
+    box.style.display = "none";
+  }
+}
+
 setupMainPage();
 setupProgressPage();
 setupResultPage();
 setupAdminPage();
 setupCriteriaPage();
+setupAdminCriteriaManagePage();
