@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>관리자 기능 목업</title>
+    <style>
+      :root {
+        --ink: #182230;
+        --text: #344054;
+        --muted: #667085;
+        --line: #d0d5dd;
+        --soft: #f8fafc;
+        --blue: #1677ff;
+        --green: #12b76a;
+        --amber: #f79009;
+        --rose: #f04438;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #eef2f7;
+        color: var(--ink);
+        font-family: Arial, "Noto Sans KR", sans-serif;
+      }
+
+      .page {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+
+      .shell {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #e4e7ec;
+        background: var(--soft);
+      }
+
+      .eyebrow {
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 0;
+        font-size: 26px;
+        line-height: 1.25;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text);
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: var(--blue);
+        background: var(--blue);
+        color: #fff;
+      }
+
+      .body {
+        padding: 24px;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .metric,
+      .panel,
+      .row {
+        border: 1px solid #e4e7ec;
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .metric {
+        padding: 16px;
+      }
+
+      .metric div {
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .metric span {
+        color: #146146;
+        font-size: 12px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .panel h2 {
+        margin-bottom: 4px;
+        font-size: 18px;
+      }
+
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #edf1f6;
+        padding: 10px 8px;
+        text-align: left;
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 4px 9px;
+        background: #e6eef8;
+        color: #37506f;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .badge.green {
+        background: #ecfdf3;
+        color: #067647;
+      }
+
+      .badge.amber {
+        background: #fffaeb;
+        color: #b54708;
+      }
+
+      .activity {
+        display: grid;
+        gap: 10px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 84px minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+      }
+
+      .time {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .row strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 14px;
+      }
+
+      .row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .bar {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #eef2f7;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--blue);
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .control {
+        border: 1px solid #e4e7ec;
+        border-radius: 8px;
+        padding: 13px;
+        background: var(--soft);
+      }
+
+      .control strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .control p {
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .switch {
+        width: 42px;
+        height: 24px;
+        border-radius: 999px;
+        background: var(--blue);
+        padding: 3px;
+      }
+
+      .switch::after {
+        content: "";
+        display: block;
+        width: 18px;
+        height: 18px;
+        margin-left: auto;
+        border-radius: 50%;
+        background: #fff;
+      }
+
+      @media (max-width: 980px) {
+        .header,
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .metric-grid,
+        .layout,
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="shell">
+        <header class="header">
+          <div>
+            <div class="eyebrow">Admin</div>
+            <h1>AI Readability 운영 대시보드</h1>
+          </div>
+          <nav class="nav">
+            <a class="button" href="#">메인 화면</a>
+            <a class="button primary" href="#">평가 기준 관리</a>
+          </nav>
+        </header>
+
+        <div class="body">
+          <section class="metric-grid" aria-label="관리자 핵심 지표">
+            <article class="metric">
+              <div>오늘 평가</div>
+              <strong>18</strong>
+              <span>오늘 생성된 평가</span>
+            </article>
+            <article class="metric">
+              <div>일일 평가자수</div>
+              <strong>7</strong>
+              <span>오늘 고유 사용자</span>
+            </article>
+            <article class="metric">
+              <div>평균 점수</div>
+              <strong>82</strong>
+              <span>전체 결과 기준</span>
+            </article>
+            <article class="metric">
+              <div>추천 적용률</div>
+              <strong>64%</strong>
+              <span>반영된 추천 비율</span>
+            </article>
+            <article class="metric">
+              <div>재판정 필요</div>
+              <strong>5</strong>
+              <span>불일치 항목 수</span>
+            </article>
+            <article class="metric">
+              <div>활성 기준</div>
+              <strong>v1</strong>
+              <span>정상 배포 중</span>
+            </article>
+          </section>
+
+          <section class="layout">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>최근 평가 결과</h2>
+                  <p class="sub">운영자가 품질 흐름을 빠르게 확인하는 영역입니다.</p>
+                </div>
+                <span class="badge green">정상</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>문서</th>
+                    <th>점수</th>
+                    <th>등급</th>
+                    <th>상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>온보딩 가이드</td>
+                    <td>91</td>
+                    <td>A</td>
+                    <td><span class="badge green">확정</span></td>
+                  </tr>
+                  <tr>
+                    <td>API 사용 정책</td>
+                    <td>76</td>
+                    <td>B</td>
+                    <td><span class="badge amber">검토</span></td>
+                  </tr>
+                  <tr>
+                    <td>장애 대응 절차</td>
+                    <td>68</td>
+                    <td>C</td>
+                    <td><span class="badge amber">재판정</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+
+            <aside class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>운영 설정</h2>
+                  <p class="sub">목업 기준의 관리자 제어 항목입니다.</p>
+                </div>
+              </div>
+              <div class="controls">
+                <div class="control">
+                  <strong>평가 기준 v1</strong>
+                  <p>현재 활성 평가 기준을 사용자 평가에 적용합니다.</p>
+                  <div class="switch" aria-hidden="true"></div>
+                </div>
+                <div class="control">
+                  <strong>추천어 자동 표시</strong>
+                  <p>결과 화면에 AI 추천 문구를 기본 표시합니다.</p>
+                  <div class="switch" aria-hidden="true"></div>
+                </div>
+                <div class="control">
+                  <strong>Aggregator 재검토</strong>
+                  <p>평가 항목 간 충돌이 있으면 운영 큐에 올립니다.</p>
+                  <div class="switch" aria-hidden="true"></div>
+                </div>
+                <div class="control">
+                  <strong>확정 로그 저장</strong>
+                  <p>사용자가 확정한 결과와 피드백을 기록합니다.</p>
+                  <div class="switch" aria-hidden="true"></div>
+                </div>
+              </div>
+            </aside>
+          </section>
+
+          <section class="layout">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>기준별 품질 추이</h2>
+                  <p class="sub">각 평가 기준의 평균 충족도를 운영자가 확인합니다.</p>
+                </div>
+              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>제목과 구조 명확성</td>
+                    <td><div class="bar"><span style="width: 88%"></span></div></td>
+                    <td>88%</td>
+                  </tr>
+                  <tr>
+                    <td>AI가 읽기 쉬운 문장</td>
+                    <td><div class="bar"><span style="width: 73%"></span></div></td>
+                    <td>73%</td>
+                  </tr>
+                  <tr>
+                    <td>용어 일관성</td>
+                    <td><div class="bar"><span style="width: 65%"></span></div></td>
+                    <td>65%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+
+            <aside class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>최근 운영 활동</h2>
+                  <p class="sub">관리자가 확인해야 할 이벤트입니다.</p>
+                </div>
+              </div>
+              <div class="activity">
+                <div class="row">
+                  <span class="time">09:42</span>
+                  <div>
+                    <strong>평가 기준이 조회됨</strong>
+                    <p>활성 기준 v1이 결과 화면에 적용되었습니다.</p>
+                  </div>
+                  <span class="badge green">완료</span>
+                </div>
+                <div class="row">
+                  <span class="time">10:18</span>
+                  <div>
+                    <strong>추천 문구 12개 생성</strong>
+                    <p>이 중 8개가 사용자에 의해 반영되었습니다.</p>
+                  </div>
+                  <span class="badge green">64%</span>
+                </div>
+                <div class="row">
+                  <span class="time">11:03</span>
+                  <div>
+                    <strong>재판정 큐 발생</strong>
+                    <p>점수와 등급이 어긋난 결과 5건을 확인해야 합니다.</p>
+                  </div>
+                  <span class="badge amber">검토</span>
+                </div>
+              </div>
+            </aside>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
